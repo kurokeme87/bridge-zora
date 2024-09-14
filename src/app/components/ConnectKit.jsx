@@ -34,7 +34,7 @@ const config = createConfig({
     splitEmailAndPhone: false, // Optional, displays Email and phone number entry separately
     collapseWalletList: false, // Optional, hide wallet list behind a button
     hideContinueButton: false, // Optional, remove "Continue" button underneath Email or phone number entry
-    connectorsOrder: ["email", "phone", "wallet"], //  Optional, sort connection methods (index 0 will be placed at the top)
+    connectorsOrder: ["wallet"], //  Optional, sort connection methods (index 0 will be placed at the top)
     language: "en-US", // Optional, also supported ja-JP, zh-CN, zh-TW, and ko-KR
     mode: "light", // Optional, changes theme between light, dark, or auto (which will change it based on system settings)
     theme: {

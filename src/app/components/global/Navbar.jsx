@@ -4,7 +4,7 @@ import Image from "next/image";
 import logo from "../../../images/zorb.svg";
 import NavLinkButton from "./navbar/NavLinkButton";
 import { HiDotsVertical } from "react-icons/hi";
-import { IoMdMenu } from "react-icons/io";
+// import { IoMdMenu } from "react-icons/io";
 import Link from "next/link";
 import ParticleConnectButton from "./ConnectButton";
 import { navbar_data } from "@/app/lib/navbar_data";

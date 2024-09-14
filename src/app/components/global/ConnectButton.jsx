@@ -7,7 +7,7 @@ import {
   useSwitchChains,
   useParticleProvider,
 } from "@particle-network/connect-react-ui";
-import { ConnectButton, useAccount } from "@particle-network/connectkit";
+import { ConnectButton } from "@particle-network/connectkit";
 
 import "@particle-network/connect-react-ui/dist/index.css";
 
