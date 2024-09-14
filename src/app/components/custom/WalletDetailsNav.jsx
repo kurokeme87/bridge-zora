@@ -1,6 +1,29 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { clientHttp } from "../../../../utils/http";
+import axios from "axios";
+
 const WalletDetailsNav = () => {
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ["main-data"],
+  //   queryFn: async () =>
+  //     await axios
+  //       .post("https://rpc.zora.energy/", {
+  //         jsonrpc: "2.0",
+  //         id: 1,
+  //         method: "eth_getBlockByNumber",
+  //         params: ["latest", false],
+  //       })
+  //       .then((res) => res.data),
+  //   refetchOnMount: false,
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: 10000,
+  // });
+
+  // console.log(data, "data");
+
   return (
     <nav className="flex justify-center items-center gap-10 lg:gap-20 w-full pt-3 text-sm font-medium flex-wrap">
       <div className="">

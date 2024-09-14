@@ -1,64 +1,49 @@
 "use client";
 
-import Image from "next/image";
-import { React, useState } from "react";
-import logo from "../../images/zorb.svg";
+import WalletDetailsNav from "../components/custom/WalletDetailsNav";
 import ParticleConnectButton from "../components/global/ConnectButton";
-import InputAutoFocus from "../components/custom/InputAutoFocus";
-import Link from "next/link";
 
-export default function Portfolio() {
-  const [values, setValues] = useState(["", "", "", "", ""]);
-
-  const areAllInputsFilled = values.every((value) => value !== "");
+const Distribute = () => {
   return (
-    <div className="m-0 p-0">
-      <div className="w-full text-center bg-primary_orange text-white py-3.5 px-2 text-sm font-inter font-semibold">
-        The protocol is not accepting deposits beyond the $1,000,000,000 cap.
-        Please stay tuned for more updates.
+    <section className="w-full h-full font-pure">
+      <h1 className="text-xl md:text-3xl font-bold px-5 py-7 w-full text-center border-b border-gray-400">
+        DISTRIBUTE
+      </h1>
+      <div className="w-full border-b px-5 pt-10 pb-4 flex flex-col justify-center items-center border-gray-400">
+        <div className="border border-gray-500 w-full max-w-lg">
+          <div className="border-b p-4 mb-4 border-gray-700">
+            <p className="text-sm text-gray-700">
+              Send Zora Ether amount per recipient:
+            </p>
+
+            <input
+              type="number"
+              className="h-16 pl-2 w-full sm:w-[50%] text-3xl md:text-4xl lg:text-5xl font-bold border-transparent  placeholder:text-gray-400 mt-4"
+              placeholder="0 ETH"
+            />
+            <p className="text-sm mt-2">
+              BALANCE <span className="font-medium"> 0 ETH</span>
+            </p>
+          </div>
+
+          <div className="p-4">
+            <p>Send Zora Ether recipients (one per line):</p>
+            <textarea rows={8} className="w-full md:w-[70%]" />
+
+            <h1 className="text-xl md:text-2xl lg:text-4xl font-bold mt-10">
+              CONNECT YOUR WALLET TO DISTRIBUTE ETHER
+            </h1>
+
+            <div className="mt-10 w-full flex justify-start items-center">
+              <ParticleConnectButton />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <nav className="w-full h-32 flex justify-between items-center px-5 md:px-10 lg:px-36">
-        <Link href="/">
-          <Image
-            className="md:w-[45px] w-8"
-            width={45}
-            height={45}
-            src={logo}
-            alt="kaarak logo"
-          />
-        </Link>
-
-        <div className="flex justify-end items-center gap-5 font-nunito font-medium">
-          <Link href="/" className="hover:underline">
-            Restaking
-          </Link>
-          <Link href="/portfolio" className="hover:underline">
-            Portfolio
-          </Link>
-          <ParticleConnectButton />
-        </div>
-      </nav>
-
-      <section className="w-full flex flex-col justify-center items-center px-5">
-        <div className="max-w-lg w-full background p-7 rounded-md mt-20 text-white font-inter">
-          <h1 className="uppercase w-full text-center font-bold lg:text-2xl">
-            Early access xp
-          </h1>
-          <h1 className="w-full text-center mt-4 text-sm md:text-base">
-            Enter your invite code to start earning XP.
-          </h1>
-
-          <InputAutoFocus values={values} setValues={setValues} />
-
-          <button
-            disabled={!areAllInputsFilled}
-            className="background font-bold text-base md:text-lg lg:text-xl w-full rounded-md border mt-10 h-12 md:h-14 lg:h-16 disabled:opacity-65 disabled:cursor-not-allowed"
-          >
-            Redeem Invite Code
-          </button>
-        </div>
-      </section>
-    </div>
+      <WalletDetailsNav />
+    </section>
   );
-}
+};
+
+export default Distribute;

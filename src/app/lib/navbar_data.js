@@ -1,44 +1,18 @@
-export const explore = [
+export const navbar_data = [
   {
-    label: "Restaking",
-    link: "network",
+    label: "TESTNET BRIDGE",
+    link: "/",
   },
   {
-    label: "Ecosystem",
-    link: "ecosystem",
+    label: "ZORO.CO",
+    link: "https://zora.co/",
   },
   {
-    label: "K2 brodge",
-    link: "bridge",
-  },
-];
-
-export const developers = [
-  {
-    label: "Build (Get in touch)",
-    link: "build",
+    label: "BLOCK EXPLORER",
+    link: "https://explorer.zora.energy/",
   },
   {
-    label: "Docs",
-    link: "docs",
-  },
-];
-
-export const community = [
-  {
-    label: "X (Twitter)",
-    link: "twitter",
-  },
-  {
-    label: "Telegram",
-    link: "telegram",
-  },
-  {
-    label: "Discord",
-    link: "discord",
-  },
-  {
-    label: "Blog",
-    link: "blog",
+    label: "NETWROK DOCS",
+    link: "https://docs.zora.co/docs/zora-network/intro",
   },
 ];

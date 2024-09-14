@@ -1,11 +1,11 @@
-// "use client";
+"use client";
 
 import WalletDetailsNav from "../components/custom/WalletDetailsNav";
 import ParticleConnectButton from "../components/global/ConnectButton";
 
 const Transactions = () => {
   return (
-    <section className="w-full h-full">
+    <section className="w-full h-full font-pure">
       <h1 className="text-xl md:text-3xl font-bold px-5 py-7 w-full text-center border-b border-gray-400">
         TRANSACTIONS
       </h1>

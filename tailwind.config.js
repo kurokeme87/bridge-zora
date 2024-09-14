@@ -15,7 +15,7 @@ module.exports = {
         primary_black: "#303030",
       },
       fontFamily: {
-        zorb: "var(--font-zorb)",
+        pure: "var(--font-pure)",
       },
       backgroundColor: {
         app_primary_gradient: "var(--background)",
