@@ -1,5 +1,7 @@
+import { navbar_data } from "@/app/lib/navbar_data";
 import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
+import NavLinkButton from "./NavLinkButton";
 
 const MobileNavbar = ({ open, setOpen }) => {
   return (
@@ -19,13 +21,17 @@ const MobileNavbar = ({ open, setOpen }) => {
           <IoMdClose size={25} />
         </div>
 
-        <div className="flex flex-col justify-start items-start h-full gap-4 text-primary_black w-full pt-20 pl-5 font-semibold font-nunito">
-          <Link href="/restake">Restake</Link>
-          <Link href="/ecosystem">Ecosystem</Link>
-          <Link href="/bridge">K2 Bridge</Link>
-          <Link href="/build">Build</Link>
-          <Link href="/build">Docs</Link>
-          <Link href="/build">Blog</Link>
+        <div className="flex flex-col justify-start items-start h-full gap-4 text-primary_black w-full pt-20 pl-5 font-medium text-lg">
+          <Link onClick={() => setOpen(false)} href="/">
+            HOME
+          </Link>
+          <Link onClick={() => setOpen(false)} href="/transactions">
+            TRANSACTIONS
+          </Link>
+          <Link onClick={() => setOpen(false)} href="/distribute">
+            DISTRIBUTE
+          </Link>
+          <NavLinkButton data={navbar_data} title="GO TO" />
         </div>
       </div>
     </div>

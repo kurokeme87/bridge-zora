@@ -5,7 +5,7 @@ import zora_network from "../images/ZORA_NETWORK.svg";
 import relay from "../images/relay-bridge.svg";
 import superbridge from "../images/superbridge-bridge.svg";
 import relay_logo from "../images/relay-logo.svg";
-import superbridge_logo from "../images/superbridge-bridge.svg";
+import superbridge_logo from "../images/superbridge-logo.svg";
 import WalletDetailsNav from "./components/custom/WalletDetailsNav";
 import ApplinkCard from "./components/custom/ApplinkCard";
 
@@ -24,7 +24,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="w-full flex justify-center items-center gap-20 mt-20">
+      <div className="w-full flex justify-center items-center md:flex-nowrap flex-wrap gap-20 mt-20 px-4">
         <ApplinkCard
           link="https://relay.link/zora"
           img={relay}
@@ -34,8 +34,8 @@ export default function Home() {
 
         <ApplinkCard
           link="https://relay.link/zora"
-          img={superbridge_logo}
-          logo={superbridge}
+          img={superbridge}
+          logo={superbridge_logo}
           description="Free 7-day withdrawals with Superbridge"
         />
       </div>

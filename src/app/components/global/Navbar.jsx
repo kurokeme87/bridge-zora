@@ -32,7 +32,6 @@ const Navbar = ({ setOpen }) => {
         <Link href="/distribute" className="hover:font-medium">
           DISTRIBUTE
         </Link>
-        <button className="">DISTRIBUTE</button>
         <NavLinkButton data={navbar_data} title="GO TO" />
       </div>
       <div className="flex justify-end items-center gap-1">

@@ -43,7 +43,7 @@ const NavLinkButton = ({ title, data = [], align }) => {
       isOpen
         ? "pointer-events-auto translate-y-0 opacity-100"
         : "dropdown-content group-hover:translate-y-0 opacity-0 translate-y-10 pointer-events-none"
-    } z-50 py-1 px-3 flex flex-col justify-start items-center w-max min-w-32 transition-transform duration-300 ease-in-out absolute top-7 right-0 left-0 bg-white border border-gray-800 rounded text-sm text-white whitespace-nowrap`}
+    } z-50 py-1 px-3 flex flex-col justify-start items-center w-max min-w-32 transition-transform duration-300 ease-in-out absolute top-10 md:top-7 right-0 left-0 bg-white border border-gray-800 rounded md:text-sm text-white whitespace-nowrap`}
       >
         {data.map((item, index) => (
           <Link

@@ -18,7 +18,7 @@ const ApplinkCard = ({ img, description, logo, link }) => {
       <Link href={link}>
         <div className="p-5">
           <div className="w-full flex justify-between items-center">
-            <p className="text-lg">{description}</p>
+            <p className="md:text-lg">{description}</p>
             <MdArrowOutward size={25} />
           </div>
 
