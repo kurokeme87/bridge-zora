@@ -36,11 +36,10 @@ const Navbar = ({ setOpen }) => {
       </div>
       <div className="flex justify-end items-center gap-1">
         <ParticleConnectButton />
-        <HiDotsVertical
-          onClick={() => setOpen(true)}
-          size={20}
-          className="md:hidden block"
-        />
+
+        <div className="md:hidden block">
+          <NavLinkButton data={navbar_data} />
+        </div>
       </div>
     </nav>
   );

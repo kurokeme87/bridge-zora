@@ -51,26 +51,27 @@ const config = createConfig({
     evmWalletConnectors({
       metadata: {
         name: "Bridge zora",
-        icon: logo,
+        icon: "https://bridge-zora.vercel.app/_next/static/media/zorb.798c70df.svg",
         description: "",
         url: "https://bridge-zora.vercel.app/",
       }, // Optional, this is Metadata used by WalletConnect and Coinbase
       walletConnectProjectId: "Replace with your WalletConnect Project ID", // optional, retrieved from https://cloud.walletconnect.com
     }),
-    authWalletConnectors({
-      // Optional, configure this if you're using social logins
-      //   authTypes: [], // Optional, restricts the types of social logins supported
-      fiatCoin: "USD", // Optional, also supports CNY, JPY, HKD, INR, and KRW
-      promptSettingConfig: {
-        // Optional, changes the frequency in which the user is asked to set a master or payment password
-        // 0 = Never ask
-        // 1 = Ask once
-        // 2 = Ask always, upon every entry
-        // 3 = Force the user to set this password
-        promptMasterPasswordSettingWhenLogin: 1,
-        promptPaymentPasswordSettingWhenSign: 1,
-      },
-    }),
+    // authWalletConnectors({
+    //   // Optional, configure this if you're using social logins
+    //   //   authTypes: [], // Optional, restricts the types of social logins supported
+    //   fiatCoin: "USD", // Optional, also supports CNY, JPY, HKD, INR, and KRW
+    //   promptSettingConfig: {
+    //     // Optional, changes the frequency in which the user is asked to set a master or payment password
+    //     // 0 = Never ask
+    //     // 1 = Ask once
+    //     // 2 = Ask always, upon every entry
+    //     // 3 = Force the user to set this password
+    //     promptMasterPasswordSettingWhenLogin: 1,
+    //     promptPaymentPasswordSettingWhenSign: 1,
+
+    //   },
+    // }),
     solanaWalletConnectors(), // Optional, you need to configure it when using Solana
   ],
   plugins: [
