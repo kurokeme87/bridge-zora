@@ -2,8 +2,12 @@
 
 import WalletDetailsNav from "../components/custom/WalletDetailsNav";
 import ParticleConnectButton from "../components/global/ConnectButton";
+import { ConnectButton, useAccount } from "@particle-network/connectkit";
 
 const Distribute = () => {
+  const { address, isConnected, chainId } = useAccount();
+  console.log(address, "is connectd");
+
   return (
     <section className="w-full h-full font-pure">
       <h1 className="text-xl md:text-3xl font-bold px-5 py-7 w-full text-center border-b border-gray-400">

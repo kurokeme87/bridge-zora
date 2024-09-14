@@ -25,7 +25,7 @@ const WalletDetailsNav = () => {
   // console.log(data, "data");
 
   return (
-    <nav className="flex justify-center items-center gap-10 lg:gap-20 w-full pt-3 text-xs md:text-sm font-medium flex-wrap">
+    <nav className="flex justify-center items-center gap-10 lg:gap-20 w-full pt-3 text-xs md:text-sm font-medium flex-wrap mt-auto">
       <div className="">
         <p className="text-gray-400">CHAIN NAME</p>
         <p className="text-lg">Zora</p>

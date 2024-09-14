@@ -1,15 +1,15 @@
 export const navbar_data = [
   {
     label: "TESTNET BRIDGE",
-    link: "/",
+    link: "https://testnet.bridge.zora.energy/",
   },
   {
-    label: "ZORO.CO",
+    label: "ZORA.CO",
     link: "https://zora.co/",
   },
   {
     label: "BLOCK EXPLORER",
-    link: "https://explorer.zora.energy/",
+    link: "https://sepolia.explorer.zora.energy/",
   },
   {
     label: "NETWROK DOCS",

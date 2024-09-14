@@ -47,8 +47,9 @@ const NavLinkButton = ({ title, data = [], align }) => {
       >
         {data.map((item, index) => (
           <Link
+            target="_blank"
             key={index}
-            href={`/${item.link}`}
+            href={item.link}
             className={`w-full p-1 hover:font-semibold text-gray-800 text-${
               align ? align : "center"
             }`}

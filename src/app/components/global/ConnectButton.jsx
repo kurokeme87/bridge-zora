@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect } from "react";
 import {
-  ConnectButton,
-  useAccount,
+  // ConnectButton,
   useConnectKit,
   useSwitchChains,
   useParticleProvider,
 } from "@particle-network/connect-react-ui";
+import { ConnectButton, useAccount } from "@particle-network/connectkit";
 
 import "@particle-network/connect-react-ui/dist/index.css";
 
