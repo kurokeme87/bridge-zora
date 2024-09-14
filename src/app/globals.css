@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  --background: linear-gradient(90deg, rgb(223, 94, 0) 0%, rgb(255, 156, 84) 100%);
+  /* --foreground: #171717; */
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: linear-gradient(90deg, rgb(223, 94, 0) 0%, rgb(255, 156, 84) 100%);
+    --foreground: #ededed;
+  }
+}
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.background {
+  background: linear-gradient(90deg, rgb(223, 94, 0) 0%, rgb(255, 156, 84) 100%);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.ecosystem-background {
+  /* background: linear-gradient(90deg, rgb(223, 94, 0) 0%, rgb(255, 156, 84) 100%); */
+  background: #DF5E00;
+  /* background: linear-gradient(126deg, rgba(255, 255, 255, 0) 9.49%, rgba(171, 171, 171, 0.04) 71.04%), #FFFFFF; */
+  filter: blur(205px);
+}
