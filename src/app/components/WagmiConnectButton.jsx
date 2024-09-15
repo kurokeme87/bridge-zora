@@ -2,7 +2,7 @@
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-function WagmiConnectButton({ styles }) {
+function WagmiConnectButton({ styles, title }) {
   return (
     <div>
       <button
@@ -10,7 +10,7 @@ function WagmiConnectButton({ styles }) {
       >
         <ConnectButton
           style={{ color: "white" }}
-          label="CONNECT"
+          label={title ? title : "CONNECT"}
           className="bg-black text-white"
         />
       </button>
