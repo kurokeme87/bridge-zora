@@ -16,3 +16,18 @@ export const navbar_data = [
     link: "https://docs.zora.co/docs/zora-network/intro",
   },
 ];
+
+export const mobile_navbar_data = [
+  {
+    label: "HOME",
+    link: "/",
+  },
+  {
+    label: "TRANSACTIONS",
+    link: "/transactions",
+  },
+  {
+    label: "DISTRIBUTE",
+    link: "/distribute",
+  },
+];

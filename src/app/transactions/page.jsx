@@ -8,7 +8,6 @@ import WalletDetailsNav from "../components/custom/WalletDetailsNav";
 //   // useAccount,
 //   usePublicClient,
 // } from "@particle-network/connectkit";
-import Link from "next/link";
 import { useSmartAccount } from "@particle-network/connectkit";
 import WagmiConnectButton from "../components/WagmiConnectButton";
 import { useAccount } from "wagmi";
@@ -24,7 +23,7 @@ const Transactions = () => {
   const smartAccount = useSmartAccount();
   const userOp = smartAccount?.buildUserOperation({
     tx: {
-      // to: address,
+      to: address,
       value: "0x1", // 1wei
       data: "0x",
     },

@@ -1,14 +1,10 @@
 // This componenthas drodpwn too
 "use client";
 
-import { mobile_navbar_data, navbar_data } from "@/app/lib/navbar_data";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { HiDotsVertical } from "react-icons/hi";
-import { IoIosArrowDown } from "react-icons/io";
-import NavButton from "./NavButon";
 
-const NavLinkButton = ({ title, data = [], align, extended }) => {
+const NavButton = ({ title, data = [], align }) => {
   const dropdowRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,26 +24,10 @@ const NavLinkButton = ({ title, data = [], align, extended }) => {
   return (
     <div ref={dropdowRef} className="relative">
       <button
-        className="flex justify-start items-center gap-3 font-nunito font-semibold hover:underline"
+        className="font-medium text-black"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        {title ? (
-          <>
-            <p>{title}</p>
-
-            <IoIosArrowDown
-              className={`${
-                isOpen ? "rotate-180" : ""
-              } ease transition-all duration-200`}
-            />
-          </>
-        ) : (
-          <HiDotsVertical
-            // onClick={() => setOpen(true)}
-            size={20}
-            className="md:hidden block"
-          />
-        )}
+        <p>{title}</p>
       </button>
 
       {/* Dropdown conntent */}
@@ -61,24 +41,19 @@ const NavLinkButton = ({ title, data = [], align, extended }) => {
       >
         {data.map((item, index) => (
           <Link
-            target="_blank"
+            onClick={() => setIsOpen(false)}
             key={index}
             href={item.link}
-            className={`w-full px-1 py-1.5 hover:font-semibold text-gray-800 text-${
+            className={`w-full p-1 hover:font-semibold text-gray-800 text-${
               align ? align : "center"
             }`}
           >
             {item.label}
           </Link>
         ))}
-        {extended ? (
-          <>
-            <NavButton data={mobile_navbar_data} title="GOTO" />
-          </>
-        ) : null}
       </div>
     </div>
   );
 };
 
-export default NavLinkButton;
+export default NavButton;

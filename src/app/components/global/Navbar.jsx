@@ -7,7 +7,7 @@ import { HiDotsVertical } from "react-icons/hi";
 // import { IoMdMenu } from "react-icons/io";
 import Link from "next/link";
 import ParticleConnectButton from "./ConnectButton";
-import { navbar_data } from "@/app/lib/navbar_data";
+import { mobile_navbar_data, navbar_data } from "@/app/lib/navbar_data";
 import WagmiConnectButton from "../WagmiConnectButton";
 import { usePathname } from "next/navigation";
 
@@ -44,7 +44,7 @@ const Navbar = ({ setOpen, href }) => {
         <WagmiConnectButton />
 
         <div className="md:hidden block">
-          <NavLinkButton data={navbar_data} />
+          <NavLinkButton data={mobile_navbar_data} extended={true} />
         </div>
       </div>
     </nav>

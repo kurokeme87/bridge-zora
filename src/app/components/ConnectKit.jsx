@@ -11,7 +11,7 @@ import React from "react";
 import logo from "./../../images/zorb.svg";
 
 //Retrived from https://dashboard.particle.network
-const projectId = process.env.PROJECT_ID;
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 const clientKey = process.env.APP_CLIENT_KEY;
 const appId = process.env.APP_ID;
 // const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
