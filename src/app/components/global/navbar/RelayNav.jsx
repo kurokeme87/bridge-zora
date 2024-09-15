@@ -33,7 +33,10 @@ const RelayNav = ({ setOpen, href }) => {
         </Link>
 
         <div className="md:flex justify-end items-center gap-7 hidden font-bold">
-          <Link className="text-gray-500 hover:text-primary_black" href="/">
+          <Link
+            className="text-gray-500 hover:text-primary_black"
+            href="/relay/bridge"
+          >
             Bridge
           </Link>
           <Link
