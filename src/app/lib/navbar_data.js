@@ -17,6 +17,33 @@ export const navbar_data = [
   },
 ];
 
+export const relay_navbar_data = [
+  {
+    label: "Docs",
+    link: "https://testnet.bridge.zora.energy/",
+  },
+  {
+    label: "Help Center",
+    link: "https://zora.co/",
+  },
+  {
+    label: "Terms of Use",
+    link: "https://sepolia.explorer.zora.energy/",
+  },
+  {
+    label: "Privacy Policy",
+    link: "https://docs.zora.co/docs/zora-network/intro",
+  },
+  {
+    label: "Tesnets",
+    link: "https://docs.zora.co/docs/zora-network/intro",
+  },
+  {
+    label: "The Superchain",
+    link: "https://docs.zora.co/docs/zora-network/intro",
+  },
+];
+
 export const mobile_navbar_data = [
   {
     label: "HOME",

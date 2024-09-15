@@ -26,14 +26,14 @@ export default function Home() {
 
       <div className="w-full flex justify-center items-center md:flex-nowrap flex-wrap gap-20 mt-20 px-4">
         <ApplinkCard
-          link="https://relay.link/zora"
+          link="/relay"
           img={relay}
           logo={relay_logo}
           description="Instant bridging at low cost with Relay"
         />
 
         <ApplinkCard
-          link="https://relay.link/zora"
+          link="/relay"
           img={superbridge}
           logo={superbridge_logo}
           description="Free 7-day withdrawals with Superbridge"

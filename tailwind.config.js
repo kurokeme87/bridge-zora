@@ -16,6 +16,7 @@ module.exports = {
       },
       fontFamily: {
         pure: "var(--font-pure)",
+        inter: "var(--font-inter)",
       },
       backgroundColor: {
         app_primary_gradient: "var(--background)",
