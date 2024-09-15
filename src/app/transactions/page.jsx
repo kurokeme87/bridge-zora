@@ -11,7 +11,7 @@ import WalletDetailsNav from "../components/custom/WalletDetailsNav";
 import Link from "next/link";
 import { useSmartAccount } from "@particle-network/connectkit";
 import WagmiConnectButton from "../components/WagmiConnectButton";
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
+import { useAccount } from "wagmi";
 import { UseWallet } from "../components/useWallet";
 
 const Transactions = () => {
