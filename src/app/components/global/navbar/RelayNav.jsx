@@ -38,7 +38,7 @@ const RelayNav = ({ setOpen, href }) => {
           </Link>
           <Link
             className="text-gray-500 hover:text-primary_black"
-            href="/transactions"
+            href="/relay/transactions"
           >
             Tranactions
           </Link>
