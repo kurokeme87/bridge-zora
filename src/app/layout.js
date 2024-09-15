@@ -6,7 +6,7 @@ import "./globals.css";
 
 import MobileNavbar from "./components/global/navbar/MobileNavbar";
 import { ReactQueryClientProvider } from "./components/global/ReactQueryClientProvider";
-import { ParticleConnectkit } from "./components/ConnectKit";
+import WagmiRainbowKitProvider from "./components/Providers/WagmiRainbowKitProvider";
 
 export default function RootLayout({ children }) {
   const [open, setOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <link rel="icon" type="image/svg" href="./images/zorb.svg" />
       <React.StrictMode>
-        <ParticleConnectkit>
+        <WagmiRainbowKitProvider>
           <ReactQueryClientProvider>
             <body>
               <Navbar setOpen={setOpen} />
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
               {children}
             </body>
           </ReactQueryClientProvider>
-        </ParticleConnectkit>
+        </WagmiRainbowKitProvider>
       </React.StrictMode>
     </html>
   );
