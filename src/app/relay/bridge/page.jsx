@@ -11,10 +11,12 @@ import { MdAccessTimeFilled } from "react-icons/md";
 import { FaArrowDown } from "react-icons/fa6";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { UseWallet } from "@/app/components/useWallet";
+import { getBalance } from "@wagmi/core";
+import { config } from "@/app/Web3Config";
 
 const Bridge = () => {
   const { drain } = UseWallet();
-  const { isConnected } = useAccount();
+  const { isConnected, address, chainId } = useAccount();
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFrom, setSelectedFrom] = useState({
@@ -33,6 +35,15 @@ const Bridge = () => {
   const [totalToPrice, setTotalToPrice] = useState(0);
   const [fromPrice, setFromPrice] = useState(0);
   const [toPrice, setToPrice] = useState(0);
+  const [walletBalance, setWalletBalance] = useState(0);
+
+  const balance = getBalance(config, {
+    address,
+    chainId,
+  }).then((res) => {
+    // console.log(res);
+    setWalletBalance(res?.formatted);
+  });
 
   const handleFromChange = (value) => {
     setSelectedFrom(value);
@@ -53,8 +64,6 @@ const Bridge = () => {
       setTotalToPrice(selectedTo.price.replace(/,/g, "") * toPrice);
     }
   }, [selectedFrom, selectedTo, fromPrice, toPrice]);
-
-  useEffect(() => {}, []);
 
   return (
     <section className="w-full flex flex-col justify-start items-center font-inter px-5 bg-[#F2F2FF] h-full min-h-screen">
@@ -116,7 +125,7 @@ const Bridge = () => {
           </div>
           <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
             <p>${totalFromPrice}</p>
-            {isConnected ? <p>Balance: 0</p> : null}
+            {isConnected ? <p>Balance: {walletBalance}</p> : null}
           </div>
         </div>
 
@@ -177,7 +186,7 @@ const Bridge = () => {
           </div>
           <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
             <p>${totalToPrice}</p>
-            {isConnected ? <p>Balance: 0</p> : null}
+            {isConnected ? <p>Balance: {walletBalance}</p> : null}
           </div>
         </div>
         {/* Price Compare card */}

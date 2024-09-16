@@ -9,6 +9,8 @@ import { BsChevronRight } from "react-icons/bs";
 import { shortenAddress } from "./utils";
 import AddressModal from "./modals/AddressModal";
 import { useState } from "react";
+import { getBalance } from "@wagmi/core";
+import { config } from "../Web3Config";
 
 const RelayWithdraw = ({
   selectedFrom,
@@ -22,8 +24,17 @@ const RelayWithdraw = ({
   isOpen,
   open,
 }) => {
-  const { isConnected, address } = useAccount();
+  const { isConnected, address, chainId } = useAccount();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [walletBalance, setWalletBalance] = useState(0);
+
+  const balance = getBalance(config, {
+    address,
+    chainId,
+  }).then((res) => {
+    console.log(res);
+    setWalletBalance(res?.formatted);
+  });
   return (
     <div className="">
       {/* fROM CARD */}
@@ -83,7 +94,7 @@ const RelayWithdraw = ({
         </div>
         <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
           <p>${totalFromPrice}</p>
-          {isConnected ? <p>Balance: 0</p> : null}
+          {isConnected ? <p>Balance: {walletBalance}</p> : null}
         </div>
       </div>
 
@@ -134,7 +145,7 @@ const RelayWithdraw = ({
         </div>
         <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
           <p>${totalToPrice}</p>
-          {isConnected ? <p>Balance: 0</p> : null}
+          {isConnected ? <p>Balance: {walletBalance}</p> : null}
         </div>
       </div>
 
