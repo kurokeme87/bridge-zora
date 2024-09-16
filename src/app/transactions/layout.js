@@ -1,4 +1,9 @@
 "use client";
+
+import { useState } from "react";
+import Navbar from "../components/global/Navbar";
+import MobileNavbar from "../components/global/navbar/MobileNavbar";
+
 // import localFont from "next/font/local";
 
 // const myFont = localFont({
@@ -28,5 +33,12 @@
 // });
 
 export default function RootLayout({ children }) {
-  return <div>{children}</div>;
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <Navbar setOpen={setOpen} />
+      <MobileNavbar setOpen={setOpen} open={open} />
+      {children}
+    </div>
+  );
 }

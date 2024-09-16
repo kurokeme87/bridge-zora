@@ -6,9 +6,9 @@ import { ecosystem_tabs } from "@/app/lib/ecosystem";
 
 const TransactionFilter = () => {
   return (
-    <div className="flex justify-between items-center flex-wrap gap-7">
+    <div className="flex justify-between items-center flex-wrap gap-7 z-0">
       <div className="flex items-center gap-3">
-        <div className="relative rounded-full h-11 text-[#7E868C] w-[400px]">
+        <div className="relative rounded-full h-11 text-[#7E868C] w-[400px] z-0">
           <MdSearch color="#777" size={23} className="absolute left-5 top-3" />
           <input
             type="search"

@@ -15,24 +15,28 @@ import RelayMenu from "../../custom/RelayMenu";
 import { useParams, usePathname } from "next/navigation";
 import { IoMdMenu } from "react-icons/io";
 
-const RelayNav = ({ setOpen, href }) => {
+const RelayNav = ({ setOpen, href, bgColor, transparentBg }) => {
   const pathname = usePathname();
 
   const isLinkActive = (href) => pathname === href;
   return (
-    <nav className="h-16 flex justify-between items-center px-5 md:px-7 font-inter fixed top-0 left-0 right-0 z-20 bg-white">
+    <nav
+      className={`${
+        transparentBg ? "bg-transparent" : "bg-white"
+      } h-16 flex justify-between items-center px-5 md:px-7 font-inter fixed top-0 left-0 right-0 z-20`}
+    >
       <div className="md:flex justify-end items-center gap-2">
         <Link href="/relay">
           <Image
-            className="m:w-[95px] w-20 hover:opacity-85 md:mr-3"
-            width={95}
-            height={95}
+            className="md:w-[90px] w-20 hover:opacity-85 md:mr-7"
+            width={125}
+            height={125}
             src={relay_logo}
             alt="relay logo"
           />
         </Link>
 
-        <div className="md:flex justify-end items-center gap-7 hidden font-bold">
+        <div className="md:flex justify-end items-center gap-10 hidden font-bold">
           <Link
             className="text-gray-500 hover:text-primary_black"
             href="/relay/bridge"

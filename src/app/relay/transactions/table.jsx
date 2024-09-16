@@ -7,7 +7,7 @@ export const Table = () => {
   return (
     <div className="mt-4 w-full whitespace-nowrap font-inter overflow-x-auto">
       <table className="w-full font-inter">
-        <tr className="border-b border-gray-200 text-sm text-gray-500 sticky top-16 left-0 right-0 bg-white z-10">
+        <tr className="border-b border-gray-200 text-sm text-gray-500 bg-white z-10">
           <td className="font-medium p-4">From</td>
           <td className="font-medium p-4">To</td>
           <td className="font-medium p-4">Transaction</td>

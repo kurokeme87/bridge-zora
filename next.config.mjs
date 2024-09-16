@@ -5,6 +5,15 @@ const nextConfig = {
     APP_CLIENT_KEY: "cFa79bluW1rTXvNWbU9D1Yty1V31CCCn56dEMOOO",
     APP_ID: "4f450f58-7f9d-43fc-9acb-d130155095eb",
   },
+  images: {
+    dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
