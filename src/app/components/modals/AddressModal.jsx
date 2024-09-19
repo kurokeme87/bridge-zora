@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import { MdAccessTimeFilled } from "react-icons/md";
 import { useAccount } from "wagmi";
 import { FaCheckCircle } from "react-icons/fa";
+import { zora_crypto } from "@/app/lib/zora_cryptos";
 
 const AddressModal = ({ open, onClose }) => {
   const dropdowRef = useRef(null);

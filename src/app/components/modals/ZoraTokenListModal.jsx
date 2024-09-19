@@ -1,14 +1,12 @@
 "use client";
 
-import { crypto_list } from "@/app/lib/crypto";
-import { crypto_ecosystems } from "@/app/lib/ecosystem";
-import { zora_crypto } from "@/app/lib/zora_cryptos";
+import { zora_crypto, zora_token } from "@/app/lib/zora_cryptos";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { MdSearch } from "react-icons/md";
 
-const CryptoListModal = ({ open, onClose, onSelect }) => {
+const ZoraTokenListModal = ({ open, onClose, onSelect }) => {
   const dropdowRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,7 +42,7 @@ const CryptoListModal = ({ open, onClose, onSelect }) => {
         className="fixed inset-0 top-[50%] left-[50%] p-4 rounded-2xl -translate-y-[50%] -translate-x-[50%] z-[999] bg-white shadow-md w-full max-w-[400px] h-fit max-h-[500px]"
       >
         <div className="flex justify-between items-center">
-          <h2 className="text-black font-semibold">Select chain</h2>
+          <h2 className="text-black font-semibold">Select token</h2>
           <IoMdClose
             className=""
             size={18}
@@ -58,13 +56,13 @@ const CryptoListModal = ({ open, onClose, onSelect }) => {
           <MdSearch color="#777" size={23} className="absolute left-3 top-3" />
           <input
             type="search"
-            placeholder="Search for a chain"
+            placeholder="Search for a token"
             className="w-full h-11 bg-[#f3f3f3] pl-10 rounded-lg outline-[#5746AF]"
           />
         </div>
 
         <div className="flex flex-col overflow-y-auto h-80 mt-2">
-          {Object.entries(zora_crypto).map(([key, item], index) => {
+          {Object.entries(zora_token).map(([key, item], index) => {
             console.log(item, "item");
             return (
               <div
@@ -112,4 +110,4 @@ const CryptoListModal = ({ open, onClose, onSelect }) => {
   );
 };
 
-export default CryptoListModal;
+export default ZoraTokenListModal;

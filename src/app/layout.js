@@ -3,6 +3,7 @@
 import React from "react";
 import { ReactQueryClientProvider } from "./components/global/ReactQueryClientProvider";
 import WagmiRainbowKitProvider from "./components/Providers/WagmiRainbowKitProvider";
+import "@uniswap/widgets/fonts.css";
 import "./globals.css";
 
 export default function RootLayout({ children }) {

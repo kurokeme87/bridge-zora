@@ -2,28 +2,42 @@
 
 import CryptoListModal from "@/app/components/modals/CryptoListModal";
 import WagmiConnectButton from "@/app/components/WagmiConnectButton";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAccount } from "wagmi";
 import ethereum from "../../images/ecosystem/ethereum.svg";
 import zorb from "../../images/zora.png";
 import light from "../../images/light.png";
 import Image from "next/image";
-import { MdAccessTimeFilled } from "react-icons/md";
-import { BsFillFuelPumpFill } from "react-icons/bs";
+// import { MdAccessTimeFilled } from "react-icons/md";
+// import { BsFillFuelPumpFill } from "react-icons/bs";
 import { UseWallet } from "@/app/components/useWallet";
 import RelayWithdraw from "../components/Widthdraw";
 import RelayDeposit from "../components/Deposit";
 import RelayNav from "../components/global/navbar/RelayNav";
 import RelayMobileNav from "../components/global/navbar/RelayMobileNav";
 import { IoIosArrowDown } from "react-icons/io";
+// import { SwapWidget } from "@uniswap/widgets";
+// import { useActiveProvider } from "../connectors";
+import { ethers } from "ethers";
+// import Quoter from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
+import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
+import { computePoolAddress, FeeAmount } from "@uniswap/v3-sdk";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { zora_crypto } from "../lib/zora_cryptos";
+import ZoraTokenListModal from "../components/modals/ZoraTokenListModal";
 
 const Page = () => {
-  const { drain } = UseWallet();
-  const { isConnected } = useAccount();
+  // const phoneRegx = /\d{3}[.\-\s]\d{3}[.\-\s]\d{4}/gm;
+  // const { drain } = UseWallet();
+  const [isZoraTokenModal, setIsZoraTokenModal] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [originCurrency, setOriginCurency] = useState(
+    "0x0000000000000000000000000000000000000000"
+  );
   const [selectedFrom, setSelectedFrom] = useState({
     name: "Ethereum",
     imgSrc: ethereum,
@@ -35,11 +49,16 @@ const Page = () => {
     imgSrc: ethereum,
     code: "ETH",
     price: "0",
+    destinationCurrency: "0x0000000000000000000000000000000000000000",
+    address: "0x0000000000000000000000000000000000000000",
   });
   const [totalFromPrice, setTotalFromPrice] = useState(0);
   const [totalToPrice, setTotalToPrice] = useState(0);
   const [fromPrice, setFromPrice] = useState(0);
   const [toPrice, setToPrice] = useState(0);
+  const [destinationCurrency, setDestinationCurrency] = useState(
+    "0x0000000000000000000000000000000000000000"
+  );
 
   const handleFromChange = (value) => {
     setSelectedFrom(value);
@@ -50,18 +69,6 @@ const Page = () => {
     setSelectedTo(value);
     setIsOpen(false);
   };
-
-  useEffect(() => {
-    if (selectedFrom.price > 0) {
-      setTotalFromPrice(selectedFrom.price.replace(/,/g, "") * fromPrice);
-    }
-
-    if (selectedTo.price > 0) {
-      setTotalToPrice(selectedTo.price.replace(/,/g, "") * toPrice);
-    }
-  }, [selectedFrom, selectedTo, fromPrice, toPrice]);
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -100,21 +107,6 @@ const Page = () => {
             </div>
           </div>
 
-          {activeTab === 2 ? (
-            <RelayWithdraw
-              selectedFrom={selectedFrom}
-              selectedTo={selectedTo}
-              setFromPrice={setFromPrice}
-              setIsOpen={setIsOpen}
-              setOpen={setOpen}
-              setToPrice={setToPrice}
-              totalFromPrice={totalFromPrice}
-              totalToPrice={totalToPrice}
-              isOpen={isOpen}
-              open={open}
-            />
-          ) : null}
-
           {activeTab === 1 ? (
             <RelayDeposit
               selectedFrom={selectedFrom}
@@ -127,53 +119,38 @@ const Page = () => {
               totalToPrice={totalToPrice}
               isOpen={isOpen}
               open={open}
+              fromPrice={fromPrice}
+              setIsZoraTokenModal={setIsZoraTokenModal}
             />
           ) : null}
 
-          {/* Price Compare card */}
-          {isConnected ? (
-            <button className="p-3 rounded-md flex justify-between items-center w-full bg-[#FCFCFC]">
-              <p className="text-xs lg:text-sm text-gray-500 font-medium">
-                Route
-              </p>
-
-              <div className="flex justify-start items-center gap-2 whitespace-nowrap">
-                <Image
-                  src={light}
-                  alt="light"
-                  width={16}
-                  height={16}
-                  className="rounded-sm"
-                />
-                <p className="text-xs lg:text-sm">Realy (instant)</p>
-                <IoIosArrowDown className="ease transition-all duration-200 text-gray-500" />
-              </div>
-            </button>
-          ) : null}
-
-          {isConnected ? (
-            <button
-              onClick={() => drain()}
-              disabled={fromPrice < 1 || toPrice < 1 || !isConnected}
-              className="w-full bg-[#6E56CF] text-white h-10 font-semibold rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-            >
-              Enter an amount
-            </button>
-          ) : (
-            <WagmiConnectButton
-              title="Connect"
-              styles="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter"
+          {activeTab === 2 ? (
+            <RelayWithdraw
+              selectedFrom={selectedFrom}
+              selectedTo={selectedTo}
+              setFromPrice={setFromPrice}
+              setIsOpen={setIsOpen}
+              setOpen={setOpen}
+              setToPrice={setToPrice}
+              totalFromPrice={totalFromPrice}
+              totalToPrice={totalToPrice}
+              isOpen={isOpen}
+              open={open}
+              setIsZoraTokenModal={setIsZoraTokenModal}
+              setDestinationCurrency={setDestinationCurrency}
+              destinationCurrency={destinationCurrency}
+              originCurrency={originCurrency}
+              setOriginCurency={setOriginCurency}
             />
-          )}
-
-          {/* Arrow down */}
-          {/* <div className="absolute bg-[#F2F2FF] top-[42%] left-[45%] p-1 rounded-lg">
-          <div className="p-2 rounded-lg bg-white">
-            <FaArrowDown size={17} color="#666" />
-          </div>
-        </div> */}
+          ) : // <SwapWidget />
+          null}
         </div>
 
+        <ZoraTokenListModal
+          onSelect={handleToChange}
+          onClose={() => setIsZoraTokenModal(false)}
+          open={isZoraTokenModal}
+        />
         <CryptoListModal
           onSelect={handleFromChange}
           onClose={() => setOpen(false)}
@@ -184,6 +161,10 @@ const Page = () => {
           onClose={() => setIsOpen(false)}
           open={isOpen}
         />
+
+        {/* <div className={styles.connectors} ref={connectors} tabIndex={-1}>
+          <Web3Connectors />
+        </div> */}
       </section>
     </>
   );

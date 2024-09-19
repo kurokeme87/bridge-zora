@@ -11,6 +11,10 @@ import AddressModal from "./modals/AddressModal";
 import { useState } from "react";
 import { getBalance } from "@wagmi/core";
 import { config } from "../Web3Config";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import WagmiConnectButton from "./WagmiConnectButton";
+import light from "../../images/light.png";
 
 const RelayWithdraw = ({
   selectedFrom,
@@ -34,6 +38,26 @@ const RelayWithdraw = ({
   }).then((res) => {
     console.log(res);
     setWalletBalance(res?.formatted);
+  });
+
+  const { data: priceData } = useQuery({
+    queryKey: ["price"],
+    queryFn: async () =>
+      axios
+        .post("https://api.relay.link/price", {
+          user: "0x000000000000000000000000000000000000dead",
+          originChainId: 1,
+          destinationChainId: 7777777,
+          originCurrency: "0x6b175474e89094c44da98b954eedeac495271d0f",
+          destinationCurrency: "0x0000000000000000000000000000000000000000",
+          tradeType: "EXACT_INPUT",
+          amount: "122000000000000000000",
+          referrer: "relay.link/swap",
+          useExternalLiquidity: false,
+        })
+        .then((res) => res.data),
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
   });
   return (
     <div className="">
@@ -148,6 +172,39 @@ const RelayWithdraw = ({
           {isConnected ? <p>Balance: {walletBalance}</p> : null}
         </div>
       </div>
+
+      {isConnected ? (
+        <button className="p-3 rounded-md flex justify-between items-center w-full bg-[#FCFCFC]">
+          <p className="text-xs lg:text-sm text-gray-500 font-medium">Route</p>
+
+          <div className="flex justify-start items-center gap-2 whitespace-nowrap">
+            <Image
+              src={light}
+              alt="light"
+              width={16}
+              height={16}
+              className="rounded-sm"
+            />
+            <p className="text-xs lg:text-sm">Realy (instant)</p>
+            <IoIosArrowDown className="ease transition-all duration-200 text-gray-500" />
+          </div>
+        </button>
+      ) : null}
+
+      {isConnected ? (
+        <button
+          // onClick={() => drain()}
+          // disabled={fromPrice < 1 || toPrice < 1 || !isConnected}
+          className="w-full bg-[#6E56CF] text-white h-10 font-semibold rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+        >
+          Enter an amount
+        </button>
+      ) : (
+        <WagmiConnectButton
+          title="Connect"
+          styles="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter"
+        />
+      )}
 
       <AddressModal onClose={() => setIsModalOpen(false)} open={isModalOpen} />
     </div>
