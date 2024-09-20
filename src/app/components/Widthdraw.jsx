@@ -60,7 +60,7 @@ const RelayWithdraw = ({
     refetchOnWindowFocus: false,
   });
   return (
-    <div className="">
+    <div className="flex flex-col justify-start items-start gap-4">
       {/* fROM CARD */}
       <div className="w-full bg-[#FCFCFC] p-3 rounded-md">
         <div className="flex justify-between items-center">
@@ -123,7 +123,7 @@ const RelayWithdraw = ({
       </div>
 
       {/* To card */}
-      <div className="w-full bg-[#FCFCFC] p-3 rounded-md mt-3">
+      <div className="w-full bg-[#FCFCFC] p-3 rounded-md">
         <div className="flex justify-start items-center gap-2 text-sm mb-4 font-inter">
           <p>To</p>
           <Image

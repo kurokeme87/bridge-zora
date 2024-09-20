@@ -42,12 +42,18 @@ const Page = () => {
     name: "Ethereum",
     imgSrc: ethereum,
     code: "ETH",
-    price: "0",
+    price: 18,
+    chainId: 1,
+    decimals: 18,
+    destinationCurrency: "0x0000000000000000000000000000000000000000",
+    address: "0x0000000000000000000000000000000000000000",
+    amount: 18,
   });
   const [selectedTo, setSelectedTo] = useState({
     name: "Ethereum",
     imgSrc: ethereum,
     code: "ETH",
+    chainId: 1,
     price: "0",
     destinationCurrency: "0x0000000000000000000000000000000000000000",
     address: "0x0000000000000000000000000000000000000000",
@@ -107,24 +113,25 @@ const Page = () => {
             </div>
           </div>
 
-          {activeTab === 1 ? (
-            <RelayDeposit
-              selectedFrom={selectedFrom}
-              selectedTo={selectedTo}
-              setFromPrice={setFromPrice}
-              setIsOpen={setIsOpen}
-              setOpen={setOpen}
-              setToPrice={setToPrice}
-              totalFromPrice={totalFromPrice}
-              totalToPrice={totalToPrice}
-              isOpen={isOpen}
-              open={open}
-              fromPrice={fromPrice}
-              setIsZoraTokenModal={setIsZoraTokenModal}
-            />
-          ) : null}
+          {/* {activeTab === 1 ? ( */}
+          <RelayDeposit
+            activeTab={activeTab}
+            selectedFrom={selectedFrom}
+            selectedTo={selectedTo}
+            setFromPrice={setFromPrice}
+            setIsOpen={setIsOpen}
+            setOpen={setOpen}
+            setToPrice={setToPrice}
+            totalFromPrice={totalFromPrice}
+            totalToPrice={totalToPrice}
+            isOpen={isOpen}
+            open={open}
+            fromPrice={fromPrice}
+            setIsZoraTokenModal={setIsZoraTokenModal}
+          />
+          {/* ) : null} */}
 
-          {activeTab === 2 ? (
+          {/* {activeTab === 2 ? (
             <RelayWithdraw
               selectedFrom={selectedFrom}
               selectedTo={selectedTo}
@@ -143,7 +150,7 @@ const Page = () => {
               setOriginCurency={setOriginCurency}
             />
           ) : // <SwapWidget />
-          null}
+          null} */}
         </div>
 
         <ZoraTokenListModal
@@ -161,10 +168,6 @@ const Page = () => {
           onClose={() => setIsOpen(false)}
           open={isOpen}
         />
-
-        {/* <div className={styles.connectors} ref={connectors} tabIndex={-1}>
-          <Web3Connectors />
-        </div> */}
       </section>
     </>
   );
