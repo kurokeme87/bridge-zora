@@ -107,7 +107,7 @@ const RelayDeposit = ({
     <>
       <div
         className={`${
-          activeTab === 1 ? "flex-col " : "flex-col-reverse"
+          activeTab === 1 ? "flex-col" : "flex-col-reverse"
         } flex justify-start items-start gap-4`}
       >
         {/* fROM CARD */}
@@ -121,14 +121,14 @@ const RelayDeposit = ({
               width={17}
               height={17}
             />
-            <p>Ethereum</p>
+            <p className="text-gray-500">Ethereum</p>
           </div>
           <div className="flex flex-row-reverse justify-between items-center">
             <input
-              className="border-none outline-none bg-transparent w-full text-xl lg:text-2xl xl:text-3xl font-bold font-inter placeholder:text-black p-2"
+              className="border-none text-right outline-none bg-transparent w-full sm:w-[95%] text-xl lg:text-2xl xl:text-3xl font-bold font-inter placeholder:text-black py-2 pl-3 pr-2"
               placeholder="0"
               type="number"
-              dir="rtl"
+              // dir="rtl"
               value={fromInputValue}
               onChange={(e) => {
                 setFromPrice(e.target.value);
@@ -194,7 +194,7 @@ const RelayDeposit = ({
                 width={17}
                 height={17}
               />
-              <p>Zora</p>
+              <p className="text-gray-500">Zora</p>
             </div>
 
             <div
@@ -207,10 +207,10 @@ const RelayDeposit = ({
           </div>
           <div className="flex flex-row-reverse justify-between items-center">
             <input
-              className="border-none outline-none bg-transparent w-full text-xl lg:text-2xl xl:text-3xl font-bold font-inter placeholder:text-black p-2"
+              className="border-none text-right outline-none bg-transparent w-full sm:w-[95%] text-xl lg:text-2xl xl:text-3xl font-bold font-inter placeholder:text-black py-2 pl-3 pr-2"
               placeholder="0"
               type="number"
-              dir="rtl"
+              // dir="rtl"
               value={toInputValue}
               onChange={(e) => {
                 setToPrice(e.target.value);
