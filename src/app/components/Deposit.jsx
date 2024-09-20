@@ -74,7 +74,7 @@ const RelayDeposit = ({
           originCurrency: selectedFrom?.address,
           destinationCurrency: selectedTo?.address,
           tradeType,
-          amount: `${fromPrice}${generateZerosString(
+          amount: `${parseInt(fromPrice.replace(".", ""))}${generateZerosString(
             tradeType === "EXACT_INPUT" ? selectedFrom?.decimals : 18
           )}`,
           referrer: "relay.link/swap",
@@ -85,6 +85,7 @@ const RelayDeposit = ({
     refetchOnWindowFocus: false,
     enabled: !!selectedFrom?.decimals && (fromPrice > 0 || toInputValue > 0),
     refetchInterval: 10000,
+    retry: 3,
   });
 
   useEffect(() => {
