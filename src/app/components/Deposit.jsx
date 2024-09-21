@@ -44,7 +44,6 @@ const RelayDeposit = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tradeType, setTradeType] = useState("EXACT_INPUT");
   const [walletBalance, setWalletBalance] = useState(0);
-  const [isErr, setIsError] = useState(false);
   const { drain } = UseWallet();
 
   const balance = getBalance(config, {
@@ -59,7 +58,7 @@ const RelayDeposit = ({
     return "0".repeat(count);
   }
 
-  const { data, isLoading, error, isError } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: [
       "price",
       fromPrice,
@@ -293,14 +292,14 @@ const RelayDeposit = ({
             </div>
           ) : null}
 
-          {!isLoading && error?.response?.data?.message ? (
+          {/* {!isLoading && error?.response?.data?.message ? (
             <div className="p-4 rounded-xl bg-[#FFF8F8] gap-2 flex justify-start items-center my-3">
               <BsInfoCircle color="red" />
               <p className="text-xs md:text-sm text-gray-800 font-medium">
                 {error?.response?.data?.message}
               </p>
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       </div>
 
@@ -328,24 +327,17 @@ const RelayDeposit = ({
             onClick={() => drain()}
             disabled={
               isLoading ||
-              isError ||
               !isConnected ||
-              (!isError && +fromInputValue > +walletBalance) ||
+              +fromInputValue > +walletBalance ||
               fromInputValue === 0
             }
             className="w-full bg-[#6E56CF] text-white h-10 font-semibold rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
           >
-            {!isLoading &&
-            activeTab === 1 &&
-            !isError &&
-            fromInputValue <= walletBalance
+            {!isLoading && activeTab === 1 && fromInputValue <= walletBalance
               ? `Deposit ${fromPrice}`
-              : activeTab === 2 && !isError && toInputValue <= walletBalance
+              : activeTab === 2 && toInputValue <= walletBalance
               ? `Withdraw ${toInputValue}`
-              : !isLoading &&
-                !isError &&
-                +fromInputValue > +walletBalance &&
-                isConnected
+              : !isLoading && +fromInputValue > +walletBalance && isConnected
               ? "Insufficient Balance"
               : "Enter an amount"}
           </button>
