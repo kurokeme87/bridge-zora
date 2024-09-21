@@ -22,6 +22,7 @@ import { MdAccessTimeFilled } from "react-icons/md";
 import light from "../../images/light.png";
 import WagmiConnectButton from "./WagmiConnectButton";
 import spinner from "../../images/spinner.svg";
+import { UseWallet } from "./useWallet";
 
 const RelayDeposit = ({
   selectedFrom,
@@ -43,6 +44,8 @@ const RelayDeposit = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tradeType, setTradeType] = useState("EXACT_INPUT");
   const [walletBalance, setWalletBalance] = useState(0);
+  const [isErr, setIsError] = useState(false);
+  const { drain } = UseWallet();
 
   const balance = getBalance(config, {
     address,
@@ -56,7 +59,7 @@ const RelayDeposit = ({
     return "0".repeat(count);
   }
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, isError } = useQuery({
     queryKey: [
       "price",
       fromPrice,
@@ -68,7 +71,7 @@ const RelayDeposit = ({
     queryFn: async () =>
       axios
         .post("https://api.relay.link/price", {
-          user: "0x000000000000000000000000000000000000dead",
+          user: address || "0x000000000000000000000000000000000000dead",
           originChainId: selectedFrom?.chainId,
           destinationChainId: 7777777,
           originCurrency: selectedFrom?.address,
@@ -100,7 +103,7 @@ const RelayDeposit = ({
       // setToPrice();
     }
   }, [data]);
-  // console.log(data, "response");
+  console.log(walletBalance, "walletBalace");
   // console.log(error, "error response");
 
   return (
@@ -324,21 +327,26 @@ const RelayDeposit = ({
           <button
             onClick={() => drain()}
             disabled={
-              fromPrice < 1 ||
-              toInputValue < 1 ||
+              isLoading ||
+              isError ||
               !isConnected ||
-              (!isLoading && walletBalance < fromPrice) ||
-              walletBalance < toInputValue
+              (!isError && +fromInputValue > +walletBalance) ||
+              fromInputValue === 0
             }
             className="w-full bg-[#6E56CF] text-white h-10 font-semibold rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
           >
             {!isLoading &&
-            (fromPrice > walletBalance || toInputValue > walletBalance)
-              ? "Insufficient Balance"
-              : activeTab === 1
+            activeTab === 1 &&
+            !isError &&
+            fromInputValue <= walletBalance
               ? `Deposit ${fromPrice}`
-              : activeTab === 2
+              : activeTab === 2 && !isError && toInputValue <= walletBalance
               ? `Withdraw ${toInputValue}`
+              : !isLoading &&
+                !isError &&
+                +fromInputValue > +walletBalance &&
+                isConnected
+              ? "Insufficient Balance"
               : "Enter an amount"}
           </button>
         </div>

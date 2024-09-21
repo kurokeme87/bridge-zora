@@ -63,12 +63,12 @@ const ZoraTokenListModal = ({ open, onClose, onSelect }) => {
 
         <div className="flex flex-col overflow-y-auto h-80 mt-2">
           {Object.entries(zora_token).map(([key, item], index) => {
-            console.log(item, "item");
+            // console.log(item, "item");
             return (
               <div
                 role="button"
                 key={index}
-                onClick={() =>
+                onClick={() => {
                   onSelect({
                     name: item[0].name,
                     imgSrc: item[0].metadata.logoURI,
@@ -77,8 +77,9 @@ const ZoraTokenListModal = ({ open, onClose, onSelect }) => {
                     decimals: item[0].decimals,
                     chainId: item[0].chainId,
                     address: item[0].address,
-                  })
-                }
+                  });
+                  onClose();
+                }}
                 className="flex justify-start items-center gap-2 p-3 hover:bg-gray-100 ease transition-all rounded-md"
               >
                 <Image
@@ -89,13 +90,13 @@ const ZoraTokenListModal = ({ open, onClose, onSelect }) => {
                 />
                 <div>
                   <p
-                    onClick={onClose}
+                    // onClick={}
                     className={`w-full text-gray-900 capitalize text-sm font-medium`}
                   >
                     {item[0]?.symbol}
                   </p>
                   <p
-                    onClick={onClose}
+                    // onClick={onClose}
                     className={`w-full text-gray-500 text-xs font-medium`}
                   >
                     {formatString(item[0]?.address)}
