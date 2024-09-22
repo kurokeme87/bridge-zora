@@ -1,43 +1,21 @@
 "use client";
 
 import CryptoListModal from "@/app/components/modals/CryptoListModal";
-import WagmiConnectButton from "@/app/components/WagmiConnectButton";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useAccount } from "wagmi";
+import { useState } from "react";
 import ethereum from "../../images/ecosystem/ethereum.svg";
 import zorb from "../../images/zora.png";
-import light from "../../images/light.png";
 import Image from "next/image";
-// import { MdAccessTimeFilled } from "react-icons/md";
-// import { BsFillFuelPumpFill } from "react-icons/bs";
-import { UseWallet } from "@/app/components/useWallet";
-import RelayWithdraw from "../components/Widthdraw";
 import RelayDeposit from "../components/Deposit";
 import RelayNav from "../components/global/navbar/RelayNav";
 import RelayMobileNav from "../components/global/navbar/RelayMobileNav";
-import { IoIosArrowDown } from "react-icons/io";
-// import { SwapWidget } from "@uniswap/widgets";
-// import { useActiveProvider } from "../connectors";
-import { ethers } from "ethers";
-// import Quoter from '@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json'
-import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
-import { computePoolAddress, FeeAmount } from "@uniswap/v3-sdk";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { zora_crypto } from "../lib/zora_cryptos";
 import ZoraTokenListModal from "../components/modals/ZoraTokenListModal";
 
 const Page = () => {
-  // const phoneRegx = /\d{3}[.\-\s]\d{3}[.\-\s]\d{4}/gm;
-  // const { drain } = UseWallet();
   const [isZoraTokenModal, setIsZoraTokenModal] = useState(false);
   const [activeTab, setActiveTab] = useState(1);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [originCurrency, setOriginCurency] = useState(
-    "0x0000000000000000000000000000000000000000"
-  );
   const [selectedFrom, setSelectedFrom] = useState({
     name: "Ethereum",
     imgSrc: ethereum,
