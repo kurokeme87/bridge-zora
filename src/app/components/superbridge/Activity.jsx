@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+"use client";
+
 import { IoMdClose } from "react-icons/io";
 import { getTransactionConfirmations } from "@wagmi/core";
 import { useAccount } from "wagmi";

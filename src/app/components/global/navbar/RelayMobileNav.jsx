@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
 import relay_logo from "../../../../images/relay-logo.svg";

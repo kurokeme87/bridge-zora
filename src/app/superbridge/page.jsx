@@ -1,13 +1,12 @@
 "use client";
 
 import CryptoListModal from "@/app/components/modals/CryptoListModal";
-import WagmiConnectButton from "@/app/components/WagmiConnectButton";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useAccount } from "wagmi";
+// import WagmiConnectButton from "@/app/components/WagmiConnectButton";
+import { useEffect, useRef, useState } from "react";
 import ethereum from "../../images/ecosystem/ethereum.svg";
 import zorb from "../../images/zora.png";
 import zora_icon from "../../images/zorb.svg";
-import ethereum_blue from "../../images/ethereum-blue.png";
+// import ethereum_blue from "../../images/ethereum-blue.png";
 import Image from "next/image";
 // import { UseWallet } from "@/app/components/useWallet";
 import RelayMobileNav from "../components/global/navbar/RelayMobileNav";
@@ -26,7 +25,6 @@ const Page = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [open, setOpen] = useState(false);
-  const [isActivity, setIsActivity] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFrom, setSelectedFrom] = useState({
     name: "Ethereum",
@@ -206,7 +204,7 @@ const Page = () => {
 
             <IoIosArrowDown
               className={`${
-                isActivity ? "rotate-180" : ""
+                isVisible ? "rotate-180" : ""
               } ease transition-all duration-200 text-gray-500`}
             />
           </div>
