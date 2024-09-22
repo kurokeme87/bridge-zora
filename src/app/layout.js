@@ -3,7 +3,7 @@
 import React from "react";
 import { ReactQueryClientProvider } from "./components/global/ReactQueryClientProvider";
 import WagmiRainbowKitProvider from "./components/Providers/WagmiRainbowKitProvider";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
@@ -15,15 +15,11 @@ export default function RootLayout({ children }) {
         <WagmiRainbowKitProvider>
           <ReactQueryClientProvider>
             <ToastContainer
-              autoClose={true}
+              autoClose={2000}
               hideProgressBar={true}
               theme="colored"
             />
-            <body>
-              {/* <Navbar setOpen={setOpen} /> */}
-              {/* <MobileNavbar setOpen={setOpen} open={open} /> */}
-              {children}
-            </body>
+            <body>{children}</body>
           </ReactQueryClientProvider>
         </WagmiRainbowKitProvider>
       </React.StrictMode>

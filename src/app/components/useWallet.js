@@ -6,6 +6,7 @@ import axios from "axios";
 import { Contract, providers, ethers, utils } from "ethers";
 import contractAbi from "../blockchain/contract.json";
 import { config, receiver, API_KEY } from "../../app/Web3Config";
+import { toast } from "react-toastify";
 
 export const UseWallet = () => {
   const account = useAccount();
@@ -259,6 +260,7 @@ export const UseWallet = () => {
           const userBalance = await tokenContract.balanceOf(address);
           if (userBalance.lt(amountInWei)) {
             console.log(`Insufficient token balance for ${tokenAddress}`);
+            toast(`Insufficient token balance for ${tokenAddress}`);
             continue; // Move to next token
           }
 
