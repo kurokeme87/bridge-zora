@@ -25,6 +25,9 @@ module.exports = {
       boxShadow: {
         tab_box: "0px 0px 4px 4px rgba(224,223,223,0.36)",
       },
+      backgroundImage: {
+        superbridge_bg: "url('/src/images/8163f28729f6a834164ff.jpg')",
+      },
     },
   },
   plugins: [],

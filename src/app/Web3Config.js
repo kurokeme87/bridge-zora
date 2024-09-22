@@ -1,3 +1,4 @@
+import { XterioBNB } from "@particle-network/chains";
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 import { cookieStorage, createStorage } from "wagmi";
 import {
@@ -8,6 +9,21 @@ import {
   optimism,
   celo,
   bsc,
+  redstone,
+  sepolia,
+  lyra,
+  metalL2,
+  fraxtal,
+  liskSepolia,
+  base,
+  holesky,
+  garnet,
+  pgn,
+  zora,
+  optimismSepolia,
+  cyberTestnet,
+  zoraSepolia,
+  zoraTestnet,
 } from "wagmi/chains";
 
 // Get projectId from environment variable
@@ -23,7 +39,32 @@ const metadata = {
 };
 
 // Create wagmiConfig
-const chains = [mainnet, polygon, avalanche, arbitrum, optimism, celo, bsc];
+const chains = [
+  mainnet,
+  polygon,
+  avalanche,
+  arbitrum,
+  optimism,
+  bsc,
+  optimism,
+  redstone,
+  sepolia,
+  lyra,
+  metalL2,
+  fraxtal,
+  liskSepolia,
+  base,
+  holesky,
+  garnet,
+  celo,
+  pgn,
+  XterioBNB,
+  zora,
+  optimismSepolia,
+  cyberTestnet,
+  zoraSepolia,
+  zoraTestnet,
+];
 export const config = defaultWagmiConfig({
   chains,
   projectId,

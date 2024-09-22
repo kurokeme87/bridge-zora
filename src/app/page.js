@@ -33,7 +33,7 @@ export default function Home() {
         />
 
         <ApplinkCard
-          link="/relay"
+          link="/superbridge"
           img={superbridge}
           logo={superbridge_logo}
           description="Free 7-day withdrawals with Superbridge"

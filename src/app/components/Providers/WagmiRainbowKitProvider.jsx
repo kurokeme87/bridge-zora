@@ -1,35 +1,11 @@
 "use client";
 
-import {
-  http,
-  createConfig,
-  cookieStorage,
-  createStorage,
-  WagmiProvider,
-} from "wagmi";
-// import { mainnet, polygon, bsc, optimism, arbitrum, base } from "wagmi/chains";
-import { mainnet, bsc } from "wagmi/chains";
+import { WagmiProvider } from "wagmi";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import {
-  darkTheme,
-  getDefaultConfig,
-  RainbowKitProvider,
-  connectorsForWallets,
-} from "@rainbow-me/rainbowkit";
-import {
-  bitgetWallet,
-  okxWallet,
-  rabbyWallet,
-  coinbaseWallet,
-  walletConnectWallet,
-  rainbowWallet,
-  metaMaskWallet,
-} from "@rainbow-me/rainbowkit/wallets";
-
-import "@rainbow-me/rainbowkit/styles.css";
+import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
-
 import { config, projectId } from "../../Web3Config";
+import "@rainbow-me/rainbowkit/styles.css";
 
 if (!projectId) throw new Error("Project ID is not defined");
 
@@ -41,28 +17,6 @@ createWeb3Modal({
   enableOnramp: true, // Optional - false as default
 });
 
-// const config = getDefaultConfig({
-//   appName: "Aura Finance",
-//   projectId: "d83a9d3860db6d32af24ee7229cfec17",
-//   // chains: [mainnet, polygon, bsc,  optimism, arbitrum, base],
-//   chains: [mainnet, bsc],
-//   ssr: true, // If your dApp uses server side rendering (SSR)
-//   multiInjectedProviderDiscovery: true,
-//   storage: createStorage({
-//     storage: cookieStorage,
-//   }),
-//   wallets: [
-//     {
-//       groupName: "Recommended",
-//       wallets: [metaMaskWallet, rainbowWallet, walletConnectWallet],
-//     },
-//     {
-//       groupName: "Others",
-//       wallets: [bitgetWallet, rabbyWallet, okxWallet, coinbaseWallet],
-//     },
-//   ],
-// });
-
 const queryClient = new QueryClient();
 
 function WagmiRainbowKitProvider({ children }) {
@@ -71,7 +25,7 @@ function WagmiRainbowKitProvider({ children }) {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           modalSize="compact"
-          theme={darkTheme({
+          theme={lightTheme({
             accentColor: "rgb(124, 58, 237)",
           })}
           appInfo={{

