@@ -5,7 +5,6 @@ import { ReactQueryClientProvider } from "./components/global/ReactQueryClientPr
 import WagmiRainbowKitProvider from "./components/Providers/WagmiRainbowKitProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import "@uniswap/widgets/fonts.css";
 import "./globals.css";
 
 export default function RootLayout({ children }) {

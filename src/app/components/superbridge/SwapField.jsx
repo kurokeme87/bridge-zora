@@ -3,10 +3,8 @@
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAccount } from "wagmi";
-// import ethereum_blue from "../../../images/ethereum-blue.png";
-// import zora from "../../../images/zora-2.png";
 import AddressModal from "../modals/AddressModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { shortenAddressSmall } from "../utils";
 import { getBalance } from "@wagmi/core";
@@ -14,9 +12,8 @@ import { config } from "../../Web3Config";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { formatCurrency } from "../../lib";
-// import light from "../../../images/light.png";
 import WagmiConnectButton from "../WagmiConnectButton";
-import spinner from "../../../images/spinner.svg";
+// import spinner from "../../../images/spinner.svg";
 import receive_icon from "../../../images/receive.svg";
 import network_fees_icon from "../../../images/fees.svg";
 import transfer_time_icon from "../../../images/transfer-time.svg";
@@ -34,7 +31,6 @@ const SwapField = ({
 }) => {
   const { isConnected, address, chainId } = useAccount();
   const [fromInputValue, setFromInputValue] = useState(0);
-  const [toInputValue, setToInputValue] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tradeType, setTradeType] = useState("EXACT_INPUT");
   const [isInputFocus, setIsInputFocus] = useState(false);
@@ -59,7 +55,6 @@ const SwapField = ({
       "price",
       fromPrice,
       tradeType,
-      toInputValue,
       selectedFrom?.address,
       selectedTo?.address,
     ],
@@ -81,23 +76,10 @@ const SwapField = ({
         .then((res) => res.data),
     refetchOnMount: true,
     refetchOnWindowFocus: false,
-    enabled: !!selectedFrom?.decimals && (fromPrice > 0 || toInputValue > 0),
+    enabled: !!selectedFrom?.decimals && fromPrice > 0,
     refetchInterval: 20000,
     retry: 3,
   });
-
-  // useEffect(() => {
-  //   if (data?.details) {
-  //     if (tradeType === "EXACT_INPUT") {
-  //       setToInputValue(fromPrice * data?.details?.rate);
-  //     }
-
-  //     if (tradeType === "EXACT_OUTPUT") {
-  //       setFromInputValue(data?.details?.currencyOut?.amountUsd);
-  //     }
-  //     // setToPrice();
-  //   }
-  // }, [data]);
 
   return (
     <>
@@ -261,8 +243,8 @@ const SwapField = ({
           >
             {!isLoading && activeTab === 1 && fromInputValue <= walletBalance
               ? `Deposit ${fromPrice}`
-              : activeTab === 2 && toInputValue <= walletBalance
-              ? `Withdraw ${toInputValue}`
+              : activeTab === 2
+              ? `Withdraw ${amount}`
               : !isLoading && +fromInputValue > +walletBalance && isConnected
               ? "Insufficient Balance"
               : "Enter an amount"}

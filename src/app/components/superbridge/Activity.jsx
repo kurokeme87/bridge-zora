@@ -1,18 +1,8 @@
 "use client";
 
 import { IoMdClose } from "react-icons/io";
-import { getTransactionConfirmations } from "@wagmi/core";
-import { useAccount } from "wagmi";
-import { config } from "@/app/Web3Config";
 
 const Activity = ({ isVisible, onClose }) => {
-  const { chainId, address } = useAccount();
-  const transaction = getTransactionConfirmations(config, {
-    hash: address.toString(),
-    chainId,
-  });
-  console.log(transaction, "all transactions");
-
   return (
     <div
       className={`
