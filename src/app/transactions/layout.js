@@ -11,6 +11,11 @@ export default function RootLayout({ children }) {
       <head>
         <title>transactions - ZORA ENERGY</title>
         <link rel="canonical" href="https://www.zorabridge.com/transactions" />
+        <meta property="og:title" content="Transactions - ZORA ENERGY" />
+        <meta
+          property="og:description"
+          content="CONNECT YOUR WALLET TO VIEW TRANSACTIONS. CONNECT. CHAIN NAME. Zora. CHAIN ID. 7777777. LAST BLOCK. 20089234. LAST L1 BLOCK. 20794867. L1 GAS PRICE."
+        />
         <meta
           name="description"
           content="CONNECT YOUR WALLET TO VIEW TRANSACTIONS. CONNECT. CHAIN NAME. Zora. CHAIN ID. 7777777. LAST BLOCK. 20089234. LAST L1 BLOCK. 20794867. L1 GAS PRICE."
