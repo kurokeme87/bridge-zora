@@ -10,7 +10,7 @@ import "./globals.css";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <link rel="icon" type="image/svg" href="./images/zorb.svg" />
+      {/* <link rel="icon" type="image/svg" href="./images/zorb.svg" /> */}
       <React.StrictMode>
         <WagmiRainbowKitProvider>
           <ReactQueryClientProvider>

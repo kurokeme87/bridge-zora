@@ -24,7 +24,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="w-full flex justify-center items-center md:flex-nowrap flex-wrap gap-20 mt-20 px-4">
+      <div className="w-full flex justify-center items-center lg:flex-row flex-col md:flex-nowrap flex-wrap gap-20 mt-20 px-4">
         <ApplinkCard
           link="/relay"
           img={relay}

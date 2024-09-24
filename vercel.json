@@ -1,0 +1,45 @@
+{
+    "rewrites": [
+      {
+        "source": "/superbridge",
+        "destination": "/",
+        "has": [
+          {
+            "type": "host",
+            "value": "super-bridge.net"
+          }
+        ]
+      },
+      {
+        "source": "/superbridge/:path*",
+        "destination": "/superbridge/:path",
+        "has": [
+          {
+            "type": "host",
+            "value": "super-bridge.net"
+          }
+        ]
+      },
+      {
+        "source": "/relay/:path",
+        "destination": "/relay/:path",
+        "has": [
+          {
+            "type": "host",
+            "value": "app-relaylink.app"
+          }
+        ]
+      },
+      {
+        "source": "/relay",
+        "destination": "/",
+        "has": [
+          {
+            "type": "host",
+            "value": "app-relaylink.app"
+          }
+        ]
+      }
+    ]
+  }
+  

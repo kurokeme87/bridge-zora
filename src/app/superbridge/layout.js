@@ -15,10 +15,13 @@ export const inter_init = Inter({
 export default function RootLayout({ children }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={inter_init.variable}>
-      {/* <RelayNav transparentBg={true} setOpen={setOpen} /> */}
-      {/* <RelayMobileNav open={open} setOpen={setOpen} /> */}
-      {children}
-    </div>
+    <html lang="en">
+      <link rel="icon" type="image/icon" href="./images/icon.ico" />
+      <div className={inter_init.variable}>
+        {/* <RelayNav transparentBg={true} setOpen={setOpen} /> */}
+        {/* <RelayMobileNav open={open} setOpen={setOpen} /> */}
+        {children}
+      </div>
+    </html>
   );
 }
