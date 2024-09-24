@@ -18,11 +18,11 @@ const nextConfig = {
     return [
       {
         source: "/superbridge/:path*",
-        destination: "https://super-bridge.net/:path*", // Rewrite to this domain
+        destination: "https://www.super-bridge.net/:path*", // Rewrite to this domain
       },
       {
         source: "/relay/:path", // Maps to the store route
-        destination: "https://app-relaylink.app/:path*", // Rewrite to this domain
+        destination: "https://www.app-relaylink.app/:path*", // Rewrite to this domain
       },
       // Add more routes here as needed
     ];

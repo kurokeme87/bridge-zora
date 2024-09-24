@@ -1,9 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-import RelayNav from "../components/global/navbar/RelayNav";
 import { Inter } from "next/font/google";
-import RelayMobileNav from "../components/global/navbar/RelayMobileNav";
 
 export const inter_init = Inter({
   subsets: ["latin"],
@@ -13,15 +10,11 @@ export const inter_init = Inter({
 });
 
 export default function RootLayout({ children }) {
-  const [open, setOpen] = useState(false);
   return (
     <html lang="en">
-      <link rel="icon" type="image/icon" href="./images/icon.ico" />
-      <div className={inter_init.variable}>
-        {/* <RelayNav transparentBg={true} setOpen={setOpen} /> */}
-        {/* <RelayMobileNav open={open} setOpen={setOpen} /> */}
-        {children}
-      </div>
+      <link rel="icon" type="image/icon" href="./icon.ico" />
+      <link rel="canonical" href="https://super-bridge.net" />
+      <div className={inter_init.variable}>{children}</div>
     </html>
   );
 }
