@@ -14,11 +14,10 @@ export const inter_init = Inter({
 
 export default function RootLayout({ children }) {
   const [open, setOpen] = useState(false);
-  const canonicalUrl = window.location.href;
 
   return (
     <html lang="en">
-      <link rel="canonical" href={canonicalUrl} />
+      <link rel="canonical" href="https://www.app-relaylink.app/bridge" />
 
       <div className={inter_init.variable}>
         <RelayNav bgColor="" transparentBg={true} setOpen={setOpen} />
