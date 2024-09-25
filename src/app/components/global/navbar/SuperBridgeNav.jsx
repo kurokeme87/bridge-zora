@@ -34,7 +34,7 @@ const SuperBridgeNav = ({ setOpen, transparentBg }) => {
         } h-20 flex justify-between items-center px-5 md:px-7 font-inter fixed top-0 left-0 right-0 z-20`}
       >
         <Link
-          href="/relay"
+          href="/superbridge"
           className="py-2 px-3.5 rounded-full bg-white md:mr-7"
         >
           <Image
