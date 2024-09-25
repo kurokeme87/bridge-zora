@@ -27,7 +27,7 @@ export default function Home() {
       <div className="w-full flex justify-center items-center lg:flex-row flex-col md:flex-nowrap flex-wrap gap-20 mt-20 px-4">
         <ApplinkCard
           // link="/relay"
-          link="https://app-relaylink.app/"
+          link="https://www.app-relaylink.app/relay"
           img={relay}
           logo={relay_logo}
           description="Instant bridging at low cost with Relay"
@@ -35,7 +35,7 @@ export default function Home() {
 
         <ApplinkCard
           // link="/superbridge"
-          link="https://super-bridge.net/"
+          link="https://www.super-bridge.net/superbridge"
           img={superbridge}
           logo={superbridge_logo}
           description="Free 7-day withdrawals with Superbridge"
