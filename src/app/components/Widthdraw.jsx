@@ -185,7 +185,7 @@ const RelayWithdraw = ({
               height={16}
               className="rounded-sm"
             />
-            <p className="text-xs lg:text-sm">Realy (instant)</p>
+            <p className="text-xs lg:text-sm">Relay (instant)</p>
             <IoIosArrowDown className="ease transition-all duration-200 text-gray-500" />
           </div>
         </button>

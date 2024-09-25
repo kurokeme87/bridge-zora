@@ -5,17 +5,13 @@ import relay_logo from "../../../../images/relay-logo.svg";
 import Image from "next/image";
 import NavLinkButton from "../navbar/NavLinkButton";
 import Link from "next/link";
-import {
-  mobile_navbar_data,
-  navbar_data,
-  relay_navbar_data,
-} from "@/app/lib/navbar_data";
+import { mobile_navbar_data, relay_navbar_data } from "@/app/lib/navbar_data";
 import WagmiConnectButton from "../../WagmiConnectButton";
 import RelayMenu from "../../custom/RelayMenu";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { IoMdMenu } from "react-icons/io";
 import { useAccount } from "wagmi";
-import { shortenAddress, shortenAddressSmall } from "../../utils";
+import { shortenAddressSmall } from "../../utils";
 import AccounModal from "../../modals/AccountModal";
 import { useState } from "react";
 

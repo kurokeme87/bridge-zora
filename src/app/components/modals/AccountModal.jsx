@@ -12,6 +12,8 @@ import { config } from "@/app/Web3Config";
 // import { zora_crypto } from "@/app/lib/zora_cryptos";
 
 const AccounModal = ({ open, onClose }) => {
+  if (!open) return;
+
   const dropdowRef = useRef(null);
   const { address, chainId } = useAccount();
   const { disconnect } = useDisconnect();
@@ -43,7 +45,6 @@ const AccounModal = ({ open, onClose }) => {
     };
   }, []);
 
-  if (!open) return;
   return (
     <div className="p-3 overflow-hidden">
       <div className="fixed top-0 bottom-0 left-0 right-0 opacity-40 bg-black ease transition-all z-20"></div>
