@@ -92,14 +92,7 @@ const Page = () => {
              : "translate-y-[10000px]"
          } space-y-2 max-w-[400px] w-full relative rounded-[30px] shadow-tab_box px-4 py-6 bg-white ease-in-out duration-300 transition-transform`}
         >
-          <div
-            // onAnimationEnd={() => {
-            //   if (!isVisible) {
-            //     // Handle additional logic if needed after animation
-            //   }
-            // }}
-            className="pb-2 flex justify-between items-center"
-          >
+          <div className="pb-2 flex justify-between items-center">
             <Image src={zorb} height={130} width={130} alt="zora logo" />
             <div className="bg-[#F1F3F5] rounded-full grid grid-cols-2 p-1 text-xs font-bold">
               <div
@@ -159,15 +152,12 @@ const Page = () => {
                 alt={selectedFrom.name}
                 height={35}
                 width={35}
-                // className=""
               />
               <div className="flex flex-col text-sm font-bold">
                 <p className="text-gray-600 text-xs">
                   {activeTab === 1 ? "To" : "From"}
                 </p>
-                <p className="">
-                  {activeTab === 1 ? "Zora" : selectedFrom.code}
-                </p>
+                <p>{activeTab === 1 ? "Zora" : selectedFrom.code}</p>
               </div>
             </div>
           </div>

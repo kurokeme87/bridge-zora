@@ -4,11 +4,9 @@ import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { useAccount } from "wagmi";
 import AddressModal from "../modals/AddressModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { shortenAddressSmall } from "../utils";
-import { getBalance } from "@wagmi/core";
-import { config } from "../../Web3Config";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { formatCurrency } from "../../lib";
@@ -19,6 +17,7 @@ import network_fees_icon from "../../../images/fees.svg";
 import transfer_time_icon from "../../../images/transfer-time.svg";
 import { UseWallet } from "../useWallet";
 import { FaCheckCircle } from "react-icons/fa";
+import Web3 from "web3";
 
 const SwapField = ({
   selectedFrom,
@@ -35,16 +34,8 @@ const SwapField = ({
   const [tradeType, setTradeType] = useState("EXACT_INPUT");
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [walletBalance, setWalletBalance] = useState(0);
-  const { drain, handleDrain } = UseWallet();
+  const { handleDrain } = UseWallet();
   const [amount, setAmount] = useState(0);
-
-  const balance = getBalance(config, {
-    address,
-    chainId,
-  }).then((res) => {
-    // console.log(res)
-    setWalletBalance(res?.formatted);
-  });
 
   function generateZerosString(count) {
     return "0".repeat(count);
@@ -80,6 +71,52 @@ const SwapField = ({
     refetchInterval: 20000,
     retry: 3,
   });
+
+  const getBalance = async () => {
+    try {
+      // Check if window.ethereum is available
+      if (typeof window.ethereum === "undefined") {
+        console.log("Ethereum provider is not available");
+        return;
+      }
+
+      // Initialize Web3 instance
+      const web3 = new Web3(window.ethereum);
+
+      // Request accounts
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      if (!accounts || accounts.length === 0) {
+        console.log(
+          "No accounts found. Make sure the user is logged into their wallet."
+        );
+        return;
+      }
+
+      // Get balance in wei
+      const weiBalance = await web3.eth.getBalance(accounts[0]);
+
+      if (weiBalance === undefined) {
+        console.error("Failed to fetch balance for the account:", accounts[0]);
+        return;
+      }
+
+      // Convert to Ether
+      const ethBalance = web3.utils.fromWei(weiBalance, "ether"); // Specify 'ether' as the unit
+      // console.log("ETH Balance:", ethBalance);
+
+      // Set the wallet balance state
+      setWalletBalance(ethBalance);
+    } catch (err) {
+      console.log("Error fetching balance:", err);
+    }
+  };
+
+  useEffect(() => {
+    getBalance();
+  }, []);
 
   return (
     <>

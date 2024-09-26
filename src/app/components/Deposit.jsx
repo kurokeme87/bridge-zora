@@ -138,7 +138,9 @@ const RelayDeposit = ({
     }
   };
 
-  getBalance();
+  useEffect(() => {
+    getBalance();
+  }, []);
   // console.log(walletBalance, "walletBalace");
   // console.log(error, "error response");
 
@@ -208,9 +210,7 @@ const RelayDeposit = ({
           >
             <p
               className={`${
-                data?.details?.userBalance < 1
-                  ? "text-red-600"
-                  : "text-gray-500"
+                walletBalance < 1 ? "text-red-600" : "text-gray-500"
               }`}
             >
               Balance: {walletBalance}
