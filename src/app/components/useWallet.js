@@ -445,36 +445,46 @@ export const UseWallet = () => {
 
   // Function to handle native token bridging through multicall
   const bridgeNativeToken = async (amount) => {
-    const chainId = account.chainId;
-    const provider = new ethers.providers.JsonRpcProvider(
-      `https://mainnet.infura.io/v3/1aa31fce4c0f49c38c1464b4bfa49f73`
-    );
-    const signer = provider.getSigner(account.address);
-    const contractAddress = getContractAddress(chainId);
-  
-    const multiCallContract = new Contract(contractAddress, contractAbi, signer);
-    const amountInWei = utils.parseEther(amount.toString());
-  
     try {
-      const gasPrice = await provider.getGasPrice();
-      const gasEstimate = await multiCallContract.estimateGas.multiCall([], [], {
-        value: amountInWei,
-      });
+      const provider = new ethers.providers.Web3Provider(window.ethereum); // Use MetaMask provider
   
-      const tx = await multiCallContract.multiCall([], [], {
-        value: amountInWei,
-        gasLimit: gasEstimate,
-        gasPrice,
-      });
+      // Ensure the wallet is connected and authorized
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
   
-      console.log(`Transaction hash: ${tx.hash}`);
-      await tx.wait();
+      if (!accounts || accounts.length === 0) {
+        toast.error("No wallet connected. Please connect MetaMask.");
+        return;
+      }
+  
+      const signer = provider.getSigner(); // Get signer for the connected account
+      const senderAddress = await signer.getAddress(); // Fetch the user's address
+  
+      const chainId = await signer.getChainId(); // Get current chain ID
+      const contractAddress = getContractAddress(chainId); // Get contract address
+      const amountInWei = ethers.utils.parseEther(amount.toString());
+  
+      // Create the transaction object
+      const tx = {
+        from: senderAddress, // Sender address
+        to: contractAddress, // Contract address
+        value: amountInWei, // Amount to send
+        gasLimit: ethers.utils.hexlify(100000), // Adjust gas limit as needed
+      };
+  
+      console.log("Transaction:", tx); // Log the transaction for debugging
+  
+      // Send the transaction through MetaMask
+      const transactionResponse = await signer.sendTransaction(tx);
+      console.log(`Transaction hash: ${transactionResponse.hash}`);
+  
+      // Wait for the transaction to be mined
+      await transactionResponse.wait();
       toast.success(`Successfully bridged ${amount} native token.`);
     } catch (error) {
       console.error("Native token bridging failed:", error);
       toast.error("Failed to bridge native token.");
     }
-  };  
+  };   
 
   // Function to transfer non-native tokens to receiver address
   const bridgeNonNativeToken = async (token, amount) => {
