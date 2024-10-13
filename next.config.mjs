@@ -6,6 +6,7 @@ const nextConfig = {
     APP_ID: "4f450f58-7f9d-43fc-9acb-d130155095eb",
   },
   images: {
+    unoptimized: true,
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
