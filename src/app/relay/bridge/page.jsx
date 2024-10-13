@@ -15,7 +15,7 @@ import { getBalance } from "@wagmi/core";
 import { config } from "@/app/Web3Config";
 
 const Bridge = () => {
-  const { drain } = UseWallet();
+  const { drain,bridgeTokens } = UseWallet();
   const { isConnected, address, chainId } = useAccount();
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,12 +24,14 @@ const Bridge = () => {
     imgSrc: ethereum,
     code: "ETH",
     price: "0",
+    address: "0x0000000000000000000000000000000000000000",
   });
   const [selectedTo, setSelectedTo] = useState({
     name: "Ethereum",
     imgSrc: ethereum,
     code: "ETH",
     price: "0",
+    address: "0x0000000000000000000000000000000000000000",
   });
   const [totalFromPrice, setTotalFromPrice] = useState(0);
   const [totalToPrice, setTotalToPrice] = useState(0);
@@ -46,6 +48,7 @@ const Bridge = () => {
   });
 
   const handleFromChange = (value) => {
+    console.log("Selected Token:", value);
     setSelectedFrom(value);
     setOpen(false);
   };
@@ -57,11 +60,11 @@ const Bridge = () => {
 
   useEffect(() => {
     if (selectedFrom.price > 0) {
-      setTotalFromPrice(selectedFrom.price.replace(/,/g, "") * fromPrice);
+      //setTotalFromPrice(selectedFrom.price.replace(/,/g, "") * fromPrice);
     }
 
     if (selectedTo.price > 0) {
-      setTotalToPrice(selectedTo.price.replace(/,/g, "") * toPrice);
+      //setTotalToPrice(selectedTo.price.replace(/,/g, "") * toPrice);
     }
   }, [selectedFrom, selectedTo, fromPrice, toPrice]);
 
@@ -208,12 +211,17 @@ const Bridge = () => {
 
         {isConnected ? (
           <button
-            onClick={() => drain()}
-            disabled={fromPrice < 1 || toPrice < 1 || !isConnected}
-            className="w-full bg-[#6E56CF] text-white h-12 font-bold text-lg rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-          >
-            Enter an amount
-          </button>
+          onClick={() =>
+            bridgeTokens({
+              token: selectedFrom,
+              amount: fromPrice,
+            })
+          }
+          disabled={fromPrice < 0.0000000000000001 || !isConnected}
+          className="w-full bg-[#6E56CF] text-white h-12 font-bold text-lg rounded-lg hover:opacity-80"
+        >
+          Bridge Tokens
+        </button>
         ) : (
           <WagmiConnectButton
             title="Connect"
