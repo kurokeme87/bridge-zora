@@ -1,6 +1,6 @@
 import olympus from "../../images/olympus.png";
 import maker from "../../images/maker-mkr-logo.png";
-import ondo from "../../images/ondo-finance-ondo-logo.png";
+import ondo from "../../images/ondo-finance.jpg";
 import ethena from "../../images/ethena.png";
 import prime from "../../images/primecoin.png";
 import ethenas from "../../images/ethereum-name-service-ens-logo.png";

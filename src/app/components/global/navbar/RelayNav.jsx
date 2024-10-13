@@ -14,6 +14,8 @@ import { useAccount } from "wagmi";
 import { shortenAddressSmall } from "../../utils";
 import AccounModal from "../../modals/AccountModal";
 import { useState } from "react";
+import BridgeZoraConnectButton from "../BridgeZoraConnectButton";
+import ConnectedAccountButton from "../ConnectedAccount";
 
 const RelayNav = ({ setOpen, href, bgColor, transparentBg }) => {
   const pathname = usePathname();
@@ -131,7 +133,14 @@ const RelayNav = ({ setOpen, href, bgColor, transparentBg }) => {
               <p>{shortenAddressSmall(address)}</p>
             </button>
           ) : (
-            <WagmiConnectButton />
+            <BridgeZoraConnectButton
+              connect={
+                <button className="h-9 rounded px-3 bg-black text-white">
+                  Connect
+                </button>
+              }
+              component={<ConnectedAccountButton />}
+            />
           )}
 
           <svg

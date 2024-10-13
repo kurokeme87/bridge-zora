@@ -49,7 +49,7 @@ export async function getAuraTokenBalance(address_) {
         ethers.utils.formatEther(balance)
       ).toFixed(2);
 
-      console.log(`Balance: ${formattedBalance} tokens`);
+      // console.log(`Balance: ${formattedBalance} tokens`);
 
       return formattedBalance;
     } catch (error) {

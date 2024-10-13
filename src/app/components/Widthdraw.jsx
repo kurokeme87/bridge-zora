@@ -15,6 +15,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import WagmiConnectButton from "./WagmiConnectButton";
 import light from "../../images/light.png";
+import { formatCurrency } from "../lib";
 
 const RelayWithdraw = ({
   selectedFrom,
@@ -169,7 +170,7 @@ const RelayWithdraw = ({
         </div>
         <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
           <p>${totalToPrice}</p>
-          {isConnected ? <p>Balance: {walletBalance}</p> : null}
+          {isConnected ? <p>Balance: {formatCurrency(walletBalance)}</p> : null}
         </div>
       </div>
 
