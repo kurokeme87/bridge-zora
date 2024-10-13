@@ -58,7 +58,7 @@ const CryptoListModal = ({ open, onClose, onSelect }) => {
 
         <div className="flex flex-col overflow-y-auto h-80 mt-2">
           {Object.entries(zora_crypto).map(([key, item], index) => {
-            console.log(item, "item");
+            // console.log(item, "item");
             return (
               <div
                 role="button"
