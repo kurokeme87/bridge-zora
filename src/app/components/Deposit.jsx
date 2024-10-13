@@ -7,14 +7,8 @@ import ethereum_blue from "../../images/ethereum-blue.png";
 import zora from "../../images/zora-2.png";
 import AddressModal from "./modals/AddressModal";
 import { useEffect, useState } from "react";
-import {
-  BsChevronRight,
-  BsFillFuelPumpFill,
-  BsInfoCircle,
-} from "react-icons/bs";
+import { BsChevronRight, BsFillFuelPumpFill } from "react-icons/bs";
 import { shortenAddress } from "./utils";
-// import { getBalance } from "@wagmi/core";
-import { config } from "../Web3Config";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { formatCurrency } from "../lib";
