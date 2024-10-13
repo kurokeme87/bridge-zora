@@ -1,3 +1,8 @@
+import olympus from "../../images/olympus.png";
+import maker from "../../images/maker-mkr-logo.png";
+import ethena from "../../images/ethena.png";
+import pepe from "../../images/pepe.png";
+
 export const zora_crypto = [
   [
     {
@@ -142,7 +147,7 @@ export const zora_crypto = [
       decimals: 18,
       vmType: "evm",
       metadata: {
-        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7083.png",
+        logoURI: "https://cryptologos.cc/logos/uniswap-uni-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -158,8 +163,7 @@ export const zora_crypto = [
       decimals: 18,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://assets.coingecko.com/coins/images/12645/thumb/AAVE.png?1601374110",
+        logoURI: "https://cryptologos.cc/logos/aave-aave-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -172,12 +176,11 @@ export const zora_crypto = [
       chainId: 1,
       address: "0xd31a59c85ae9d8edefec411d448f90841571b89c",
       symbol: "SOL",
-      name: "SOL Wormhole ",
+      name: "SOL Wormhole",
       decimals: 9,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://assets.coingecko.com/coins/images/22876/thumb/SOL_wh_small.png?1644224316",
+        logoURI: "https://cryptologos.cc/logos/solana-sol-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -194,7 +197,7 @@ export const zora_crypto = [
       vmType: "evm",
       metadata: {
         logoURI:
-          "https://assets.coingecko.com/coins/images/5681/thumb/Fetch.jpg?1572098136",
+          "https://cryptologos.cc/logos/artificial-superintelligence-alliance-fet-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -210,8 +213,7 @@ export const zora_crypto = [
       decimals: 9,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://assets.coingecko.com/coins/images/29087/large/wtao.png?1676519685",
+        logoURI: "https://cryptologos.cc/logos/bittensor-tao-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -228,7 +230,7 @@ export const zora_crypto = [
       vmType: "evm",
       metadata: {
         logoURI:
-          "https://assets.coingecko.com/coins/images/26580/standard/ONDO.png?1696525656",
+          "https://cryptologos.cc/logos/ondo-finance-ondo-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -244,8 +246,7 @@ export const zora_crypto = [
       decimals: 18,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://assets.coingecko.com/coins/images/29053/large/PRIMELOGOOO.png?1676976222",
+        logoURI: "https://cryptologos.cc/logos/primecoin-xpm-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -262,7 +263,7 @@ export const zora_crypto = [
       vmType: "evm",
       metadata: {
         logoURI:
-          "https://assets.coingecko.com/coins/images/19785/thumb/acatxTm8_400x400.jpg?1635850140",
+          "https://cryptologos.cc/logos/ethereum-name-service-ens-logo.png?v=035",
         verified: false,
         isNative: false,
       },
@@ -278,8 +279,7 @@ export const zora_crypto = [
       decimals: 9,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://assets.coingecko.com/coins/images/14483/large/token_OHM_%281%29.png?1628311611",
+        logoURI: olympus,
         verified: false,
         isNative: false,
       },
@@ -295,8 +295,7 @@ export const zora_crypto = [
       decimals: 18,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2/logo.png",
+        logoURI: maker,
         verified: false,
         isNative: false,
       },
@@ -312,8 +311,7 @@ export const zora_crypto = [
       decimals: 18,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://assets.coingecko.com/coins/images/36530/standard/ethena.png",
+        logoURI: ethena,
         verified: false,
         isNative: false,
       },
@@ -329,8 +327,7 @@ export const zora_crypto = [
       decimals: 18,
       vmType: "evm",
       metadata: {
-        logoURI:
-          "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1682922725",
+        logoURI: pepe,
         verified: false,
         isNative: false,
       },
