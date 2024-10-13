@@ -1,20 +1,13 @@
 "use client";
 
-import { crypto_list } from "@/app/lib/crypto";
-import { crypto_ecosystems } from "@/app/lib/ecosystem";
 import { zora_crypto } from "@/app/lib/zora_cryptos";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { MdSearch } from "react-icons/md";
 
 const CryptoListModal = ({ open, onClose, onSelect }) => {
   const dropdowRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
-
-  function generateZerosString(count) {
-    return "0".repeat(count);
-  }
 
   const handleClickOutside = (event) => {
     if (dropdowRef.current && !dropdowRef.current.contains(event.target)) {
