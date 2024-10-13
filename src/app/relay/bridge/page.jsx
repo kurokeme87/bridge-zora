@@ -223,10 +223,13 @@ const Bridge = () => {
           Bridge Tokens
         </button>
         ) : (
-          <WagmiConnectButton
-            title="Connect"
-            styles="w-full bg-[#6E56CF] text-white h-12 font-bold text-[16px] rounded-lg hover:opacity-80 font-inter"
-          />
+          <button
+            title="Click the connect button at the top to connect your wallet"
+            disabled={!isConnected}
+            className="w-full  text-dark h-12 font-bold text-[16px] rounded-lg opacity-80 font-inter"
+          >
+          You are not connected
+        </button>
         )}
 
         {/* Arrow down */}
