@@ -82,7 +82,7 @@ const ZoraTokenListModal = ({ open, onClose, onSelect }) => {
                 }}
                 className="flex justify-start items-center gap-2 p-3 hover:bg-gray-100 ease transition-all rounded-md"
               >
-                <Image
+                <img
                   src={item[0].metadata?.logoURI}
                   alt={item.name}
                   width={35}
