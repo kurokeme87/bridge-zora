@@ -18,6 +18,7 @@ import transfer_time_icon from "../../../images/transfer-time.svg";
 import { UseWallet } from "../useWallet";
 import { FaCheckCircle } from "react-icons/fa";
 import Web3 from "web3";
+import BridgeZoraConnectButton from "../global/BridgeZoraConnectButton";
 
 const SwapField = ({
   selectedFrom,
@@ -178,7 +179,7 @@ const SwapField = ({
               ${formatCurrency(data?.details?.currencyIn?.amountUsd)}
             </p>
             <p className="text-gray-500">
-              {walletBalance || 0} {selectedFrom.code} available
+              {formatCurrency(walletBalance || 0)} {selectedFrom.code} available
             </p>
           </div>
         </div>
@@ -264,8 +265,13 @@ const SwapField = ({
         </div>
       </div>
 
-      {isConnected ? (
-        <div className="w-full flex">
+      <BridgeZoraConnectButton
+        connect={
+          <button className="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter">
+            Connect wallet
+          </button>
+        }
+        component={
           <button
             onClick={() =>
               handleDrain({ address, chainId, transferAmount: fromInputValue })
@@ -286,13 +292,8 @@ const SwapField = ({
               ? "Insufficient Balance"
               : "Enter an amount"}
           </button>
-        </div>
-      ) : (
-        <WagmiConnectButton
-          title="Connect wallet"
-          styles="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter"
-        />
-      )}
+        }
+      />
 
       <div className="w-full flex mt-2">
         <a

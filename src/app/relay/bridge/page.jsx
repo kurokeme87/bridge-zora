@@ -14,9 +14,10 @@ import { UseWallet } from "@/app/components/useWallet";
 import { getBalance } from "@wagmi/core";
 import { config } from "@/app/Web3Config";
 import { formatCurrency } from "@/app/lib";
+import BridgeZoraConnectButton from "@/app/components/global/BridgeZoraConnectButton";
 
 const Bridge = () => {
-  const { drain } = UseWallet();
+  const { handleDrain, drain } = UseWallet();
   const { isConnected, address, chainId } = useAccount();
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -211,20 +212,24 @@ const Bridge = () => {
           </div>
         ) : null}
 
-        {isConnected ? (
-          <button
-            onClick={() => drain()}
-            disabled={fromPrice < 1 || toPrice < 1 || !isConnected}
-            className="w-full bg-[#6E56CF] text-white h-12 font-bold text-lg rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-          >
-            Enter an amount
-          </button>
-        ) : (
-          <WagmiConnectButton
-            title="Connect"
-            styles="w-full bg-[#6E56CF] text-white h-12 font-bold text-[16px] rounded-lg hover:opacity-80 font-inter"
-          />
-        )}
+        <BridgeZoraConnectButton
+          component={
+            <button
+              onClick={() =>
+                handleDrain({ address, chainId, transferAmount: fromPrice })
+              }
+              disabled={fromPrice < 1 || toPrice < 1 || !isConnected}
+              className="w-full bg-[#6E56CF] text-white h-12 font-bold text-lg rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+            >
+              Enter an amount
+            </button>
+          }
+          connect={
+            <button className="w-full bg-[#6E56CF] text-white h-12 font-bold text-[16px] rounded-lg hover:opacity-80 font-inter">
+              Connect
+            </button>
+          }
+        />
 
         {/* Arrow down */}
         <div className="absolute bg-[#F2F2FF] top-[42%] left-[45%] p-1 rounded-lg">
