@@ -119,7 +119,7 @@ const RelayWithdraw = ({
         </div>
         <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
           <p>${totalFromPrice}</p>
-          {isConnected ? <p>Balance: {walletBalance}</p> : null}
+          {isConnected ? <p>Balance: {formatCurrency(walletBalance)}</p> : null}
         </div>
       </div>
 

@@ -87,4 +87,4 @@ export function shortenAddressSmall(address, startLength = 4, endLength = 4) {
   return `${start}....${end}`; // Join with dots in between
 }
 
-getAuraTokenBalance();
+// getAuraTokenBalance();

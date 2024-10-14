@@ -61,7 +61,7 @@ const ConnectedAccountButton = () => {
   return (
     <div className="relative">
       <button
-        className="flex justify-between items-center gap-2 text-xs font-medium"
+        className="flex justify-between items-center gap-2 text-sm font-medium bg-white rounded-3xl p-1.5"
         onClick={() => setOpen(!open)}
       >
         <svg

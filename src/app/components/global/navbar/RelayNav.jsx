@@ -76,73 +76,16 @@ const RelayNav = ({ setOpen, href, bgColor, transparentBg }) => {
               <p>Create Wallet</p>
             </button>
           )}
-          {isConnected ? (
-            <button
-              onClick={() => setIsOpen(true)}
-              className="px-3 py-1.5 bg-[#FEFEFE] hover:bg-gray-100 ease transition-all flex items-center gap-4 rounded-full font-bold"
-            >
-              <svg
-                className="rounded-full"
-                xmlns="http://www.w3.org/2000/svg"
-                x="0"
-                y="0"
-                height="24"
-                width="24"
-              >
-                <rect
-                  x="0"
-                  y="0"
-                  rx="0"
-                  ry="0"
-                  height="24"
-                  width="24"
-                  transform="translate(-0.29116100145319845 7.069814247820754) rotate(134.3 12 12)"
-                  fill="#245ce1"
-                ></rect>
-                <rect
-                  x="0"
-                  y="0"
-                  rx="0"
-                  ry="0"
-                  height="24"
-                  width="24"
-                  transform="translate(9.527967720893 8.965330299129596) rotate(82.7 12 12)"
-                  fill="#034a5d"
-                ></rect>
-                <rect
-                  x="0"
-                  y="0"
-                  rx="0"
-                  ry="0"
-                  height="24"
-                  width="24"
-                  transform="translate(21.873622963723648 -7.975111659589141) rotate(506.0 12 12)"
-                  fill="#fc8400"
-                ></rect>
-                <rect
-                  x="0"
-                  y="0"
-                  rx="0"
-                  ry="0"
-                  height="24"
-                  width="24"
-                  transform="translate(-18.06515442254685 -18.90926993438925) rotate(378.5 12 12)"
-                  fill="#c71443"
-                ></rect>
-              </svg>
-              <p>{shortenAddressSmall(address)}</p>
-            </button>
-          ) : (
-            <BridgeZoraConnectButton
-              connect={
-                <button className="h-9 rounded px-3 bg-black text-white">
-                  Connect
-                </button>
-              }
-              component={<ConnectedAccountButton />}
-            />
-          )}
 
+          <BridgeZoraConnectButton
+            isNavbar={true}
+            connect={
+              <button className="h-9 rounded px-3 bg-black text-white">
+                Connect
+              </button>
+            }
+            component={<ConnectedAccountButton />}
+          />
           <svg
             aria-hidden="true"
             focusable="false"
