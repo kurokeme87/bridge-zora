@@ -1,9 +1,9 @@
-import olympus from "../../images/olympus.webp";
+import olympus from "../../images/OHM.webp";
 import maker from "../../images/maker-mkr-logo.png";
-import ondo from "../../images/ondo-finance.jpg";
-import ethena from "../../images/ethena.png";
-import prime from "../../images/primecoin.png";
-import ethenas from "../../images/ethereum-name-service-ens-logo.png";
+import ondo from "../../images/ondo.svg";
+import ena from "../../images/ethena-ena-logo.SVG";
+import prime from "../../images/primecoin.svg";
+import ethenas from "../../images/ens.svg";
 import pepe from "../../images/pepe.png";
 
 export const zora_crypto = [
@@ -280,7 +280,8 @@ export const zora_crypto = [
       decimals: 9,
       vmType: "evm",
       metadata: {
-        logoURI: olympus,
+        logoURI:
+          "https://res.coinpaper.com/coinpaper/OHM_iqwewt.png" || olympus,
         verified: false,
         isNative: false,
       },
@@ -312,7 +313,8 @@ export const zora_crypto = [
       decimals: 18,
       vmType: "evm",
       metadata: {
-        logoURI: ethena,
+        logoURI:
+          ena || "https://cryptologos.cc/logos/ethena-ena-logo.svg?v=035",
         verified: false,
         isNative: false,
       },
