@@ -15,6 +15,8 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import WagmiConnectButton from "./WagmiConnectButton";
 import light from "../../images/light.png";
+import { formatCurrency } from "../lib";
+import BridgeZoraConnectButton from "./global/BridgeZoraConnectButton";
 
 const RelayWithdraw = ({
   selectedFrom,
@@ -118,7 +120,7 @@ const RelayWithdraw = ({
         </div>
         <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
           <p>${totalFromPrice}</p>
-          {isConnected ? <p>Balance: {walletBalance}</p> : null}
+          {isConnected ? <p>Balance: {formatCurrency(walletBalance)}</p> : null}
         </div>
       </div>
 
@@ -169,7 +171,7 @@ const RelayWithdraw = ({
         </div>
         <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
           <p>${totalToPrice}</p>
-          {isConnected ? <p>Balance: {walletBalance}</p> : null}
+          {isConnected ? <p>Balance: {formatCurrency(walletBalance)}</p> : null}
         </div>
       </div>
 
@@ -191,20 +193,22 @@ const RelayWithdraw = ({
         </button>
       ) : null}
 
-      {isConnected ? (
-        <button
-          // onClick={() => drain()}
-          // disabled={fromPrice < 1 || toPrice < 1 || !isConnected}
-          className="w-full bg-[#6E56CF] text-white h-10 font-semibold rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-        >
-          Enter an amount
-        </button>
-      ) : (
-        <WagmiConnectButton
-          title="Connect"
-          styles="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter"
-        />
-      )}
+      <BridgeZoraConnectButton
+        component={
+          <button
+            // onClick={() => drain()}
+            // disabled={fromPrice < 1 || toPrice < 1 || !isConnected}
+            className="w-full bg-[#6E56CF] text-white h-10 font-semibold rounded-lg hover:opacity-80 font-inter disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+          >
+            Enter an amount
+          </button>
+        }
+        connect={
+          <button className="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter">
+            Connect
+          </button>
+        }
+      />
 
       <AddressModal onClose={() => setIsModalOpen(false)} open={isModalOpen} />
     </div>

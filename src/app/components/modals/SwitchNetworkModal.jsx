@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
-import { MdSearch } from "react-icons/md";
+// import { MdSearch } from "react-icons/md";
 import { useAccount, useSwitchChain } from "wagmi";
 import ethereum from "../../../images/eth.svg";
 import { chainImages } from "@/app/lib/network-images";
@@ -11,7 +11,7 @@ import { GoDotFill } from "react-icons/go";
 
 const SwitchNetworkModal = ({ open, onClose }) => {
   const dropdowRef = useRef(null);
-  const { chains, switchChain } = useSwitchChain();
+  const { chains, switchChainAsync } = useSwitchChain();
   const { chainId } = useAccount();
 
   const handleClickOutside = (event) => {
@@ -54,10 +54,11 @@ const SwitchNetworkModal = ({ open, onClose }) => {
             return (
               <div
                 role="button"
-                key={item.id + index}
+                key={index}
                 onClick={() => {
-                  switchChain({ chainId: item.id });
-                  onClose();
+                  switchChainAsync({ chainId: item.id }).then((res) => {
+                    onClose();
+                  });
                 }}
                 className={`${
                   chainId === item?.id
@@ -67,6 +68,7 @@ const SwitchNetworkModal = ({ open, onClose }) => {
               >
                 <div className="flex justify-start items-center gap-1 w-full">
                   <Image
+                    unoptimized
                     src={chainImages[item.id] || item?.icon || ethereum}
                     alt={item.name}
                     width={30}

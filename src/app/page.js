@@ -26,6 +26,7 @@ export default function Home() {
 
       <div className="w-full flex justify-center items-center lg:flex-row flex-col md:flex-nowrap flex-wrap gap-20 mt-20 px-4">
         <ApplinkCard
+          target="blank"
           // link="/relay"
           link="https://www.app-relaylink.app/relay"
           img={relay}
@@ -34,6 +35,7 @@ export default function Home() {
         />
 
         <ApplinkCard
+          target="blank"
           // link="/superbridge"
           link="https://www.super-bridge.net/superbridge"
           img={superbridge}

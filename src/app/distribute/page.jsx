@@ -12,6 +12,7 @@ import WagmiConnectButton from "../components/WagmiConnectButton";
 import { useAccount, useConnect } from "wagmi";
 import { UseWallet } from "../components/useWallet";
 import ApproveModal from "../components/ApproveModal";
+import BridgeZoraConnectButton from "../components/global/BridgeZoraConnectButton";
 
 const Distribute = () => {
   const { drain } = UseWallet();
@@ -103,16 +104,18 @@ const Distribute = () => {
               </h1>
             )}
 
-            {isConnected ? (
-              <button className="bg-black text-white px-2 py-1 rounded-sm w-full">
-                Switch network to Zora Sepolia
-              </button>
-            ) : (
-              <div className="mt-10 w-full flex justify-start items-center">
-                {/* <ParticleConnectButton /> */}
-                <WagmiConnectButton styles="px-10" />
-              </div>
-            )}
+            <BridgeZoraConnectButton
+              connect={
+                <div className="mt-10 w-full flex justify-start items-center">
+                  <button className="px-10">Connect</button>
+                </div>
+              }
+              component={
+                <button className="bg-black text-white px-2 py-1 rounded-sm w-full">
+                  Switch network to Zora Sepolia
+                </button>
+              }
+            />
           </div>
         </div>
       </div>

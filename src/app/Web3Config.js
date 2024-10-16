@@ -1,4 +1,3 @@
-import { XterioBNB } from "@particle-network/chains";
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 import { cookieStorage, createStorage } from "wagmi";
 import {
@@ -58,7 +57,6 @@ const chains = [
   garnet,
   celo,
   pgn,
-  XterioBNB,
   zora,
   optimismSepolia,
   cyberTestnet,

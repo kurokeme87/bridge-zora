@@ -13,6 +13,8 @@ import { BsFillFuelPumpFill } from "react-icons/bs";
 import { UseWallet } from "@/app/components/useWallet";
 import { getBalance } from "@wagmi/core";
 import { config } from "@/app/Web3Config";
+import { formatCurrency } from "@/app/lib";
+import BridgeZoraConnectButton from "@/app/components/global/BridgeZoraConnectButton";
 
 const Bridge = () => {
   const { drain,bridgeTokens } = UseWallet();
@@ -128,7 +130,9 @@ const Bridge = () => {
           </div>
           <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
             <p>${totalFromPrice}</p>
-            {isConnected ? <p>Balance: {walletBalance}</p> : null}
+            {isConnected ? (
+              <p>Balance: {formatCurrency(walletBalance || 0)}</p>
+            ) : null}
           </div>
         </div>
 
@@ -189,7 +193,9 @@ const Bridge = () => {
           </div>
           <div className="w-full flex justify-between mt-4 font-semibold text-xs text-gray-500">
             <p>${totalToPrice}</p>
-            {isConnected ? <p>Balance: {walletBalance}</p> : null}
+            {isConnected ? (
+              <p>Balance: {formatCurrency(walletBalance)}</p>
+            ) : null}
           </div>
         </div>
         {/* Price Compare card */}

@@ -6,6 +6,7 @@ import relay_logo from "../../../../images/relay-logo.svg";
 import WagmiConnectButton from "../../WagmiConnectButton";
 import { useAccount } from "wagmi";
 import Image from "next/image";
+import BridgeZoraConnectButton from "../BridgeZoraConnectButton";
 
 const RelayMobileNav = ({ open, setOpen }) => {
   const { isConnected } = useAccount();
@@ -59,9 +60,13 @@ const RelayMobileNav = ({ open, setOpen }) => {
             Docs
           </Link>
 
-          {isConnected ? null : (
-            <WagmiConnectButton styles="bg-purple-500 text-white font-bold" />
-          )}
+          <BridgeZoraConnectButton
+            connect={
+              <button className="bg-purple-500 text-white font-bold">
+                Connect
+              </button>
+            }
+          />
 
           <svg
             className="mt-10 ml-3"

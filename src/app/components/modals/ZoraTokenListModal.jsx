@@ -1,6 +1,6 @@
 "use client";
 
-import { zora_crypto, zora_token } from "@/app/lib/zora_cryptos";
+import { zora_token } from "@/app/lib/zora_cryptos";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
@@ -82,23 +82,19 @@ const ZoraTokenListModal = ({ open, onClose, onSelect }) => {
                 }}
                 className="flex justify-start items-center gap-2 p-3 hover:bg-gray-100 ease transition-all rounded-md"
               >
-                <Image
+                <img
                   src={item[0].metadata?.logoURI}
-                  alt={item.name}
+                  alt={item.name || index}
                   width={35}
                   height={35}
                 />
                 <div>
                   <p
-                    // onClick={}
                     className={`w-full text-gray-900 capitalize text-sm font-medium`}
                   >
                     {item[0]?.symbol}
                   </p>
-                  <p
-                    // onClick={onClose}
-                    className={`w-full text-gray-500 text-xs font-medium`}
-                  >
+                  <p className={`w-full text-gray-500 text-xs font-medium`}>
                     {formatString(item[0]?.address)}
                   </p>
                 </div>

@@ -7,14 +7,8 @@ import ethereum_blue from "../../images/ethereum-blue.png";
 import zora from "../../images/zora-2.png";
 import AddressModal from "./modals/AddressModal";
 import { useEffect, useState } from "react";
-import {
-  BsChevronRight,
-  BsFillFuelPumpFill,
-  BsInfoCircle,
-} from "react-icons/bs";
+import { BsChevronRight, BsFillFuelPumpFill } from "react-icons/bs";
 import { shortenAddress } from "./utils";
-// import { getBalance } from "@wagmi/core";
-import { config } from "../Web3Config";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { formatCurrency } from "../lib";
@@ -24,6 +18,7 @@ import WagmiConnectButton from "./WagmiConnectButton";
 import spinner from "../../images/spinner.svg";
 import { UseWallet } from "./useWallet";
 import Web3 from "web3";
+import BridgeZoraConnectButton from "./global/BridgeZoraConnectButton";
 
 const RelayDeposit = ({
   selectedFrom,
@@ -213,7 +208,7 @@ const RelayDeposit = ({
                 walletBalance < 1 ? "text-red-600" : "text-gray-500"
               }`}
             >
-              Balance: {walletBalance}
+              Balance: {formatCurrency(walletBalance)}
             </p>
             <p className="text-gray-500">
               ${formatCurrency(data?.details?.currencyIn?.amountUsd)}
@@ -300,7 +295,7 @@ const RelayDeposit = ({
                   : "text-gray-500"
               }`}
             >
-              Balance: {walletBalance}
+              Balance: {formatCurrency(walletBalance)}
             </p>
             <p className="text-gray-500">
               ${formatCurrency(data?.details?.currencyIn?.amountUsd)}
@@ -358,8 +353,8 @@ const RelayDeposit = ({
         </button>
       ) : null}
 
-      {isConnected ? (
-        <div className="w-full flex">
+      <BridgeZoraConnectButton
+        component={
           <button
             onClick={() =>
               handleDrain({ address, chainId, transferAmount: fromPrice })
@@ -380,13 +375,13 @@ const RelayDeposit = ({
               ? "Insufficient Balance"
               : "Enter an amount"}
           </button>
-        </div>
-      ) : (
-        <WagmiConnectButton
-          title="Connect"
-          styles="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter"
-        />
-      )}
+        }
+        connect={
+          <button className="w-full bg-[#6E56CF] text-white h-10 font-semibold text-[16px] rounded-lg hover:opacity-80 font-inter">
+            Connect
+          </button>
+        }
+      />
 
       <AddressModal onClose={() => setIsModalOpen(false)} open={isModalOpen} />
     </>
